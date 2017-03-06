@@ -1,13 +1,19 @@
-import 'babel-polyfill'
-import router from 'koa-router'
+import Router from 'koa-router'
 
-const Router = router()
+const index = new Router()
 
-Router.get('/', async (ctx, next)=>{
-    ctx.state = {
-        title: 'koa2 title'
-    }
-    await ctx.render('index',{})
+index.get('/', async ctx => {
+
+
+
+    await ctx.render('index',{title: 'koa2 easy'})
+    // ctx.body = 'koa2 test'
+    // await ctx.send(ctx, 'index.html', {root: '../views/index'})
+}).get('/test', async ctx => {
+    // ctx.body = ctx.render('index',{title: 'koa2 easy'})
+    ctx.body = 'test'
 })
-
-export default Router
+// .get('/send', async ctx => {
+//     await ctx.send(ctx, 'index.html', {root: 'static/index'})
+// })
+export default index

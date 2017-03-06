@@ -1,42 +1,46 @@
 import 'babel-polyfill'
 import path from 'path'
 import Koa from 'koa'
-import router from 'koa-router'
+import logger from 'koa-logger'
+import json from 'koa-json'
+import bodyParser from 'koa-bodyparser'
 import views from 'koa-views'
 import staticServe from 'koa-static'
+import convert from 'koa-convert'
+
 import index from './routes/index'
 // import bookingnext from './routes/bookingnext'
-
-const app = new Koa()
-const Router = router()
-
-
-
 // 端口
 
-import{PORT} from './bin/config'
+import{ PORT } from './bin/config'
+
+const app = new Koa()
 
 const PUBLIC = __dirname + '/public/'
 
 // 代码静态目录
-export const CODE = __dirname + '/code/'
+const CODE = __dirname + '/code/'
 
 // 设置静态目录
 app.use(staticServe(PUBLIC))
 app.use(staticServe(CODE))
 
-
-app.use(views(__dirname + '/views', {
+// 模板目录
+const VIEWS = __dirname + '/views'
+app.use(views(VIEWS, {
     extension: 'ejs'
 }))
 
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`)
-});
+// 记录所用方式与时间
+app.use(logger())
 
+// 传输JSON
+app.use(json())
+
+// body解析
+app.use(bodyParser())
+
+app.use(index.routes())
 
 app.on('error', (err, ctx) => {
     console.log(err)
@@ -44,7 +48,5 @@ app.on('error', (err, ctx) => {
 })
 
 app.listen(PORT)
-
-
 
 console.log(`App listening on port ${PORT}`)
