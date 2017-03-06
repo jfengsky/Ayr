@@ -1,9 +1,138 @@
+<!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>Ayr</title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 </head>
+
 <body>
-    <h1><%= title %></h1>
+    <div class="container">
+        <h1>
+            <%= title %>
+        </h1>
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">详情页</a>
+            </li>
+            <li role="presentation">
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">填写页</a>
+            </li>
+            <li role="presentation">
+                <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">tab3</a>
+            </li>
+            <li role="presentation">
+                <a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">tab4</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home" style="padding:10px 0">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    文件列表
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>文件名</th>
+                                        <th>备注</th>
+                                    </tr>
+                                    <tr>
+                                        <th>1</th>
+                                        <th><a href="" target="_blank">detail.html</a></th>
+                                        <th>团队游</th>
+                                    </tr>
+                                    <tr>
+                                        <th>2</th>
+                                        <th><a href="" target="_blank">detail.html</a></th>
+                                        <th>自由行</th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false"
+                                    aria-controls="collapseTwo">
+                                    DescriptionInfo接口
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                                non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingThree">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false"
+                                    aria-controls="collapseThree">
+                                    CalendarInfo接口
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                                non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingFour">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false"
+                                    aria-controls="collapseFour">
+                                    ResourceSearch接口
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                            <div class="panel-body">
+                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute,
+                                non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
+                                3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda
+                                shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+                                sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
+                                farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus
+                                labore sustainable VHS.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">2...</div>
+            <div role="tabpanel" class="tab-pane" id="messages">3...</div>
+            <div role="tabpanel" class="tab-pane" id="settings">4...</div>
+        </div>
+    </div>
 </body>
+
 </html>

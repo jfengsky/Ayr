@@ -9,7 +9,7 @@ import staticServe from 'koa-static'
 import convert from 'koa-convert'
 
 import index from './routes/index'
-// import bookingnext from './routes/bookingnext'
+import bookingnext from './routes/bookingnext'
 // 端口
 
 import{ PORT } from './bin/config'
@@ -41,6 +41,7 @@ app.use(json())
 app.use(bodyParser())
 
 app.use(index.routes())
+app.use(bookingnext.routes())
 
 app.on('error', (err, ctx) => {
     console.log(err)
