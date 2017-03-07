@@ -1,9 +1,11 @@
 import register from 'babel-register'
 import nodeJsx from 'node-jsx'
 import React from 'react'
-import renderToString from 'react-dom/server'
+import reactServer from 'react-dom/server'
+import { tabData } from '../bin/config'
+// import Todolist from '../public/lib/src/Todolist'
 
-import Todolist from '../public/lib/src/Todolist'
+import Tab from '../public/lib/src/component/Tab'
 
 // node下支持jsx
 register({presets: ['es2015', 'react', 'stage-0']})
@@ -13,8 +15,6 @@ nodeJsx.install({
 
 let indexHtml = ''
 
-const data = ['list1', 'list2', 'list3']
-
-indexHtml = renderToString.renderToString(<Todolist data={data} />)
+indexHtml = reactServer.renderToString(<Tab data={tabData} />)
 
 export default indexHtml
