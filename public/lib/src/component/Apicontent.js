@@ -1,5 +1,8 @@
+/**
+ * 接口详细模块
+ */
 import React, { Component, PropTypes } from 'react';
-
+import dialog from '../container/dialog'
 class Apicontent extends Component {
     render() {
         let paddingStyle = {
@@ -21,7 +24,9 @@ class Apicontent extends Component {
         )
     }
     createClickHandle = e => {
-        
+        dialog({
+            title: '创建'
+        })
     }
 }
 

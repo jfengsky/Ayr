@@ -16,8 +16,8 @@ class Root extends Component {
     }
 }
 
-// Root.propTypes = {
-//     data: React.propTypes.Object.require
-// }
+Root.propTypes = {
+    data: PropTypes.object.isRequired
+}
 
 export default Root
