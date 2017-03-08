@@ -9862,12 +9862,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Modal = function (_Component) {
     _inherits(Modal, _Component);
 
-    function Modal(props) {
+    function Modal() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, Modal);
 
-        var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-        _this.save = function (e) {
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Modal.__proto__ || Object.getPrototypeOf(Modal)).call.apply(_ref, [this].concat(args))), _this), _this.save = function (e) {
             var _getPageCode = (0, _getInitState.getPageCode)(),
                 pageName = _getPageCode.pageName,
                 pageType = _getPageCode.pageType,
@@ -9878,41 +9884,30 @@ var Modal = function (_Component) {
 
 
             if (!pageName || !pageDesc || !pageCode) {
-                _this.setState({
-                    nameError: !pageName,
-                    descError: !pageDesc,
-                    codeError: !pageCode
-                });
                 return false;
             }
 
-            _this.save({
+            _this.props.save({
                 pageName: pageName,
                 pageType: pageType,
                 pageDesc: pageDesc,
-                pageCode: pageCode
+                pageCode: encodeURIComponent(pageCode)
             });
-        };
-
-        _this.state = {
-            nameError: false,
-            descError: false,
-            codeError: false
-        };
-        return _this;
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(Modal, [{
         key: 'render',
+
+        // constructor(props) {
+        //     super(props)
+        // }
+
         value: function render() {
             var _props = this.props,
                 cancel = _props.cancel,
                 title = _props.title,
                 save = _props.save;
-            var _state = this.state,
-                nameError = _state.nameError,
-                descError = _state.descError,
-                codeError = _state.codeError;
 
             return _react2.default.createElement(
                 'div',
@@ -9944,11 +9939,7 @@ var Modal = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'modal-body' },
-                            _react2.default.createElement(_Modalpage2.default, {
-                                nameError: nameError,
-                                descError: descError,
-                                codeError: codeError
-                            })
+                            _react2.default.createElement(_Modalpage2.default, null)
                         ),
                         _react2.default.createElement(
                             'div',
@@ -9992,8 +9983,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(13);
@@ -10024,10 +10013,20 @@ var Modalpage = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Modalpage.__proto__ || Object.getPrototypeOf(Modalpage)).call(this, props));
 
+        _this.pageNameFocus = function (e) {
+            _this.setState({
+                nameError: false
+            });
+        };
+
         _this.pageNameBlur = function (e) {
             var value = _this.refs.pageName.value.trim();
             if (value) {
                 (0, _setInitState.SET_INITSTATE)('mPageName', value);
+            } else {
+                _this.setState({
+                    nameError: true
+                });
             }
         };
 
@@ -10035,39 +10034,55 @@ var Modalpage = function (_Component) {
             (0, _setInitState.SET_INITSTATE)('mPageType', _this.refs.pageType.value);
         };
 
+        _this.pageDescFocus = function (e) {
+            _this.setState({
+                descError: false
+            });
+        };
+
         _this.pageDescBlur = function (e) {
             var value = _this.refs.pageDesc.value.trim();
             if (value) {
                 (0, _setInitState.SET_INITSTATE)('mPageDesc', value);
+            } else {
+                _this.setState({
+                    descError: true
+                });
             }
+        };
+
+        _this.pageCodeFocus = function (e) {
+            _this.setState({
+                codeError: false
+            });
         };
 
         _this.pageCodeBlur = function (e) {
             var value = _this.refs.pageCode.value.trim();
             if (value) {
                 (0, _setInitState.SET_INITSTATE)('mPageCode', value);
+            } else {
+                _this.setState({
+                    codeError: true
+                });
             }
         };
 
-        var nameError = props.nameError,
-            descError = props.descError,
-            codeError = props.codeError;
-
         _this.state = {
             typelist: [],
-            nameError: nameError,
-            descError: descError,
-            codeError: codeError
+            nameError: false,
+            descError: false,
+            codeError: false
         };
         return _this;
     }
+    // componentWillReceiveProps(nextProps) {
+    //     this.setState({
+    //         ...nextProps
+    //     })
+    // }
 
     _createClass(Modalpage, [{
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            this.setState(_extends({}, nextProps));
-        }
-    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             var _this2 = this;
@@ -10113,7 +10128,7 @@ var Modalpage = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'input-group' },
-                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'pageName', onBlur: this.pageNameBlur, id: 'pageName', placeholder: '\u8BF7\u8F93\u5165\u6587\u4EF6\u540D' }),
+                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'pageName', onFocus: this.pageNameFocus, onBlur: this.pageNameBlur, id: 'pageName', placeholder: '\u8BF7\u8F93\u5165\u6587\u4EF6\u540D' }),
                             _react2.default.createElement(
                                 'div',
                                 { className: 'input-group-addon' },
@@ -10154,7 +10169,7 @@ var Modalpage = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-10' },
-                        _react2.default.createElement('input', (_React$createElement = { type: 'text', ref: 'pageDesc', className: 'form-control' }, _defineProperty(_React$createElement, 'ref', 'pageDesc'), _defineProperty(_React$createElement, 'onBlur', this.pageDescBlur), _defineProperty(_React$createElement, 'id', 'pageDesc'), _defineProperty(_React$createElement, 'placeholder', '\u8BF7\u8F93\u5165\u9875\u9762\u63CF\u8FF0'), _React$createElement))
+                        _react2.default.createElement('input', (_React$createElement = { type: 'text', ref: 'pageDesc', className: 'form-control' }, _defineProperty(_React$createElement, 'ref', 'pageDesc'), _defineProperty(_React$createElement, 'onFocus', this.pageDescFocus), _defineProperty(_React$createElement, 'onBlur', this.pageDescBlur), _defineProperty(_React$createElement, 'id', 'pageDesc'), _defineProperty(_React$createElement, 'placeholder', '\u8BF7\u8F93\u5165\u9875\u9762\u63CF\u8FF0'), _React$createElement))
                     )
                 ),
                 _react2.default.createElement(
@@ -10163,7 +10178,7 @@ var Modalpage = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-offset-2 col-sm-10' },
-                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801' })
+                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onFocus: this.pageCodeFocus, onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801' })
                     )
                 )
             );
@@ -10173,10 +10188,7 @@ var Modalpage = function (_Component) {
     return Modalpage;
 }(_react.Component);
 
-Modalpage.propTypes = _defineProperty({
-    codeError: _react.PropTypes.bool,
-    descError: _react.PropTypes.bool
-}, 'codeError', _react.PropTypes.bool);
+Modalpage.propTypes = {};
 
 exports.default = Modalpage;
 

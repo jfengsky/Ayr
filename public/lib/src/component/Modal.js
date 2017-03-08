@@ -7,18 +7,12 @@ import Modalpage from './Modalpage'
 import { getPageCode } from '../store/getInitState'
 
 class Modal extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            nameError: false,
-            descError: false,
-            codeError: false
-        }
-    }
+    // constructor(props) {
+    //     super(props)
+    // }
     
     render() {
         let { cancel, title, save } = this.props
-        let { nameError, descError, codeError } = this.state
         return (
             <div className="modal fade in" style={{display: 'block',backgroundColor: 'rgba(0,0,0,.5)'}}>
                 <div className="modal-dialog modal-lg">
@@ -30,11 +24,7 @@ class Modal extends Component {
                             <h4 className="modal-title" id="myLargeModalLabel">{title}</h4>
                         </div>
                         <div className="modal-body">
-                            <Modalpage
-                                nameError={nameError}
-                                descError={descError}
-                                codeError={codeError}
-                            />
+                            <Modalpage />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" onClick={cancel}>取消</button>
@@ -56,19 +46,14 @@ class Modal extends Component {
 
         // 表单验证，不能为空
         if( !pageName || !pageDesc || !pageCode ){
-            this.setState({
-                nameError: !pageName,
-                descError: !pageDesc,
-                codeError: !pageCode
-            })
             return false
         }
 
-        this.save({
+        this.props.save({
             pageName,
             pageType,
             pageDesc,
-            pageCode
+            pageCode: encodeURIComponent(pageCode)
         })
     }
 }

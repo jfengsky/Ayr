@@ -59,12 +59,23 @@ index.get('/', async ctx => {
     }
 
 }).post('/pageCode', async ctx => {
-    let bodyParam = ctx.request.body
-    console.log(bodyParam)
-    file.write()
-    ctx.body = {
-        ok: 1
-    }
+    let {
+        pageName,
+        pageType,
+        pageDesc,
+        pageCode
+    } = ctx.request.body
+    await file.write({
+        name: pageName,
+        code: pageCode
+    }).then( data => {
+        ctx.body = {
+            ok: 1
+        }
+    }).catch(err =>{
+        throw err
+    })
+    
 }).post('/createdb', async ctx => {
     DB.init()
     ctx.status = 200

@@ -7,7 +7,7 @@ const file = {
     },
     write({name,code}){
         return new Promise((resolve,reject) => {
-            fs.writeFile(`${__dirname}../public/${name}.html`, code, 'utf-8', err => {
+            fs.writeFile(`./public/pages/${name}.html`, decodeURIComponent(code), 'utf-8', err => {
                 if(err){
                     reject(err)
                 } else {

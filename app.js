@@ -39,7 +39,9 @@ app.use(logger())
 app.use(json())
 
 // body解析
-app.use(bodyParser())
+app.use(bodyParser({formLimit: '50mb'}))
+// app.use(bodyParser.json({limit: '50mb'}))
+// app.use(bodyParser.urlencoded({limit: '50mb', extended: true}))
 
 // 发送文件
 app.use(async (ctx, next) => {

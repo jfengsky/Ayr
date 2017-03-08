@@ -9,23 +9,18 @@ import { SET_INITSTATE } from '../store/setInitState'
 class Modalpage extends Component {
     constructor(props) {
         super(props)
-        let {
-            nameError,
-            descError,
-            codeError
-        } = props
         this.state = {
             typelist: [],
-            nameError,
-            descError,
-            codeError
+            nameError: false,
+            descError: false,
+            codeError: false
         }
     }
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            ...nextProps
-        })
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     this.setState({
+    //         ...nextProps
+    //     })
+    // }
     
     componentDidMount() {
         // 请求类型数据
@@ -38,6 +33,7 @@ class Modalpage extends Component {
                 })
             }
         })
+
     }
     
     render() {
@@ -51,7 +47,7 @@ class Modalpage extends Component {
                     <label htmlFor="pageName" className="col-sm-2 control-label">文件名</label>
                     <div className="col-sm-10">
                         <div className="input-group">
-                            <input type="text" className="form-control" ref="pageName" onBlur={this.pageNameBlur} id="pageName" placeholder="请输入文件名" />
+                            <input type="text" className="form-control" ref="pageName" onFocus={this.pageNameFocus} onBlur={this.pageNameBlur} id="pageName" placeholder="请输入文件名" />
                             <div className="input-group-addon">.html</div>
                         </div>
                     </div>
@@ -68,22 +64,32 @@ class Modalpage extends Component {
                 <div className={descError ? formErrorClassName : formClassName}>
                     <label htmlFor="pageDesc" className="col-sm-2 control-label">页面描述</label>
                     <div className="col-sm-10">
-                        <input type="text" ref="pageDesc" className="form-control" ref="pageDesc" onBlur={this.pageDescBlur} id="pageDesc" placeholder="请输入页面描述" />
+                        <input type="text" ref="pageDesc" className="form-control" ref="pageDesc" onFocus={this.pageDescFocus} onBlur={this.pageDescBlur} id="pageDesc" placeholder="请输入页面描述" />
                     </div>
                 </div>
                 <div className={codeError ? formErrorClassName : formClassName}>
                     <div className="col-sm-offset-2 col-sm-10">
-                        <textarea className="form-control" ref="pageCode" onBlur={this.pageCodeBlur} rows="10" placeholder="请粘贴代码"></textarea>
+                        <textarea className="form-control" ref="pageCode" onFocus={this.pageCodeFocus} onBlur={this.pageCodeBlur} rows="10" placeholder="请粘贴代码"></textarea>
                     </div>
                 </div>
             </form>
         )
     }
 
+    pageNameFocus = e => {
+        this.setState({
+            nameError: false
+        })
+    }
+
     pageNameBlur = e => {
         let value = this.refs.pageName.value.trim()
         if(value){
             SET_INITSTATE('mPageName', value)
+        } else {
+            this.setState({
+                nameError: true
+            })
         }
     }
 
@@ -91,25 +97,43 @@ class Modalpage extends Component {
         SET_INITSTATE('mPageType', this.refs.pageType.value)
     }
 
+    pageDescFocus = e =>{
+        this.setState({
+            descError: false
+        })
+    }
+
     pageDescBlur = e => {
         let value = this.refs.pageDesc.value.trim()
         if(value){
             SET_INITSTATE('mPageDesc', value)
+        } else {
+            this.setState({
+                descError: true
+            })
         }
     }
     
+    pageCodeFocus = e => {
+        this.setState({
+            codeError: false
+        })
+    }
+
     pageCodeBlur = e => {
         let value = this.refs.pageCode.value.trim()
         if(value){
             SET_INITSTATE('mPageCode', value)
+        } else {
+            this.setState({
+                codeError: true
+            })
         }
     }
 }
 
 Modalpage.propTypes = {
-    codeError: PropTypes.bool,
-    descError: PropTypes.bool,
-    codeError: PropTypes.bool
+    
 }
 
 export default Modalpage
