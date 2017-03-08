@@ -1,4 +1,10 @@
 const initState = {
+    
+    // 创建修改页面时的全局变量
+    mPageName: null,
+    mPageType: 0,
+    mPageDesc: null,
+    mPageCode: null,
 
     // 主导航
     nav: [

@@ -23,6 +23,26 @@ export const FETCH_PAGETYPE = data => {
     })
 }
 
+/**
+ * 创建保存页面代码
+ * @param {Object} data 
+ */
+export const FETCH_SAVE_CODE = data => {
+    let setting = {
+        url: '/pageCode',
+        type: 'post',
+        data,
+        dataType: 'json'
+    }
+
+    return new Promise((resolve, reject) => {
+        $.ajax(setting).done(data => {
+            resolve(data)
+        }).fail(data => {
+            reject(data)
+        })
+    })
+}
 
 /**
  * 初始化数据库

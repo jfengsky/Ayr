@@ -2,11 +2,11 @@
  * 一些编辑功能模块
  */
 
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { FETCH_PAGETYPE } from '../store/request'
 class Edit extends Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             typelist: []
         }
@@ -36,19 +36,20 @@ class Edit extends Component {
                             <div className="form-group" style={{marginRight: 10}}>
                                 <input type="text" className="form-control" ref="pageType" placeholder="输入页面类型" />
                             </div>
-                            <button type="button" className="btn btn-primary" onClick={this.clickSavePageHandle}>保存</button>
+                            <button type="button" className="btn btn-primary" onClick={this.clickSavePageHandle} disabled>保存</button>
                             { false && <button type="button" className="btn btn-primary" onClick={this.clickSearchPageHandle}>查询</button> }
                         </div>
-                        <div className="col-xs-12">
-                            <div className="form-group">
-                                <select className="form-control" style={{width: 170,marginRight: 10}} ref="selectPageType">
-                                    {
-                                        this.state.typelist.map( ({name,id}, index) => <option value={id} key={index}>{name}</option>)
-                                    }
-                                </select>
-                            </div>
-                            <button type="button" className="btn btn-danger" onClick={this.clickDeletePageHandle}>删除</button>
-                        </div>
+                        { false &&  <div className="col-xs-12">
+                                        <div className="form-group">
+                                            <select className="form-control" style={{width: 170,marginRight: 10}} ref="selectPageType">
+                                                {
+                                                    this.state.typelist.map( ({name,id}, index) => <option value={id} key={index}>{name}</option>)
+                                                }
+                                            </select>
+                                        </div>
+                                        <button type="button" className="btn btn-danger" onClick={this.clickDeletePageHandle}>删除</button>
+                                    </div>
+                        }
                     </div>
                     { false && <button type="button" className="btn btn-danger" onClick={this.clickCreateDB}>初始数据库</button> }
                 </form>
@@ -80,10 +81,13 @@ class Edit extends Component {
     /**
      * 初始化数据库，慎用
      */
-    clickCreateDB = e => {
-        FETCH_CREATE_DB()
-    }
+    // clickCreateDB = e => {
+    //     FETCH_CREATE_DB()
+    // }
 
+    /**
+     * 查询页面类型
+     */
     clickSearchPageHandle = e => {
         FETCH_PAGETYPE({
             type: 'search'
@@ -92,6 +96,9 @@ class Edit extends Component {
         })
     }
 
+    /**
+     * 删除页面类型
+     */
     clickDeletePageHandle = e => {
         let value = this.refs.selectPageType.value.trim() - 0
         if(value >= 0){

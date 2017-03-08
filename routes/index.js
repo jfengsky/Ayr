@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import indexHtml from './rendHtml'
 import DB from '../db/db'
+import file from '../bin/file'
 
 const DBNAME = 'AyrData'
 
@@ -57,6 +58,13 @@ index.get('/', async ctx => {
         })
     }
 
+}).post('/pageCode', async ctx => {
+    let bodyParam = ctx.request.body
+    console.log(bodyParam)
+    file.write()
+    ctx.body = {
+        ok: 1
+    }
 }).post('/createdb', async ctx => {
     DB.init()
     ctx.status = 200
