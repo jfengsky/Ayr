@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import indexHtml from './rendHtml'
 import DB from '../db/db'
 
+const DBNAME = 'AyrData'
 
 const index = new Router()
 index.get('/', async ctx => {
@@ -13,21 +14,45 @@ index.get('/', async ctx => {
     // ctx.body = ctx.render('index',{title: 'koa2 easy'})
     ctx.body = 'test'
 }).post('/pagetype', async ctx => {
-    // await next()
+    const colName = 'pageType'
     let bodyParam = ctx.request.body
     if(bodyParam.type === 'save'){
         await DB.save({
-            value:bodyParam.value,
-            dbName:'AyrData', // 数据库
-            colName: 'pageType'  // 集合
+            value:bodyParam.name,
+            dbName: DBNAME, // 数据库
+            colName
         }).then(data => {
-            ctx.body = data
+            ctx.body = data.result
+            ctx.body = {
+                ...data.result,
+                data: data.ops[0]
+            }
         })
     } else if(bodyParam.type === 'search') {
         await DB.search({
-            dbName:'AyrData', // 数据库
-            colName: 'pageType'  // 集合
+            dbName: DBNAME, // 数据库
+            colName
         }).then(data => {
+
+            // 过滤_id
+            let tempData = data.map( ({name, id}) => {
+                return {
+                    name,
+                    id
+                }
+            })
+
+            ctx.body = {
+                ok: 1,
+                data: tempData
+            }
+        })
+    } else if(bodyParam.type === 'delete') {
+        await DB.delete({
+            id: bodyParam.id - 0,
+            dbName: DBNAME, // 数据库
+            colName
+        }).then( data => {
             ctx.body = data
         })
     }

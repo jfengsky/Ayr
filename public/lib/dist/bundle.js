@@ -22476,34 +22476,97 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Edit = function (_Component) {
     _inherits(Edit, _Component);
 
-    function Edit() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function Edit(props) {
         _classCallCheck(this, Edit);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this, props));
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Edit.__proto__ || Object.getPrototypeOf(Edit)).call.apply(_ref, [this].concat(args))), _this), _this.clickSavePageHandle = function (e) {
+        _this.clickSavePageHandle = function (e) {
             var value = _this.refs.pageType.value.trim();
             if (value) {
-                (0, _request.FETCH_SAVE_PAGETYPE)({ value: value }).then(function (data) {
-                    debugger;
+                (0, _request.FETCH_PAGETYPE)({
+                    name: value,
+                    type: 'save'
+                }).then(function (data) {
+                    if (data.ok === 1) {
+                        var typelist = _this.state.typelist;
+
+                        typelist.push(data.data);
+                        _this.setState({
+                            typelist: typelist
+                        });
+                        _this.refs.pageType.value = '';
+                    }
                 });
             }
-        }, _this.clickCreateDB = function (e) {
-            (0, _request.FETCH_CREATE_DB)();
-        }, _this.clickSearchPageHandle = function (e) {
-            (0, _request.FETCH_SEARCH_PAGETYPE)().then(function (data) {
+        };
+
+        _this.clickCreateDB = function (e) {
+            FETCH_CREATE_DB();
+        };
+
+        _this.clickSearchPageHandle = function (e) {
+            (0, _request.FETCH_PAGETYPE)({
+                type: 'search'
+            }).then(function (data) {
                 console.log(data);
             });
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        };
+
+        _this.clickDeletePageHandle = function (e) {
+            var value = _this.refs.selectPageType.value.trim() - 0;
+            if (value >= 0) {
+                (0, _request.FETCH_PAGETYPE)({
+                    id: value,
+                    type: 'delete'
+                }).then(function (data) {
+                    if (data.ok === 1) {
+                        var typelist = _this.state.typelist;
+
+
+                        var delIndex = null;
+                        typelist.some(function (_ref, index) {
+                            var id = _ref.id;
+
+                            if (id === value) {
+                                delIndex = index;
+                                return true;
+                            }
+                        });
+
+                        typelist.splice(delIndex, 1);
+
+                        _this.setState({
+                            typelist: typelist
+                        });
+                    }
+                });
+            }
+        };
+
+        _this.state = {
+            typelist: []
+        };
+        return _this;
     }
 
     _createClass(Edit, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            // 请求类型数据
+            (0, _request.FETCH_PAGETYPE)({
+                type: 'search'
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this2.setState({
+                        typelist: data.data
+                    });
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -22533,10 +22596,10 @@ var Edit = function (_Component) {
                                 { type: 'button', className: 'btn btn-primary', onClick: this.clickSavePageHandle },
                                 '\u4FDD\u5B58'
                             ),
-                            _react2.default.createElement(
+                            false && _react2.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn btn-primary', onClick: this.clickSearchPageHandle },
-                                '\u4FDD\u5B58'
+                                '\u67E5\u8BE2'
                             )
                         ),
                         _react2.default.createElement(
@@ -22547,32 +22610,26 @@ var Edit = function (_Component) {
                                 { className: 'form-group' },
                                 _react2.default.createElement(
                                     'select',
-                                    { className: 'form-control', style: { width: 170, marginRight: 10 } },
-                                    _react2.default.createElement(
-                                        'option',
-                                        null,
-                                        '\u8BE6\u60C5\u9875'
-                                    ),
-                                    _react2.default.createElement(
-                                        'option',
-                                        null,
-                                        '\u53EF\u9009\u9879\u9875'
-                                    ),
-                                    _react2.default.createElement(
-                                        'option',
-                                        null,
-                                        '\u586B\u5199\u9875'
-                                    )
+                                    { className: 'form-control', style: { width: 170, marginRight: 10 }, ref: 'selectPageType' },
+                                    this.state.typelist.map(function (_ref2, index) {
+                                        var name = _ref2.name,
+                                            id = _ref2.id;
+                                        return _react2.default.createElement(
+                                            'option',
+                                            { value: id, key: index },
+                                            name
+                                        );
+                                    })
                                 )
                             ),
                             _react2.default.createElement(
                                 'button',
-                                { type: 'button', className: 'btn btn-danger' },
+                                { type: 'button', className: 'btn btn-danger', onClick: this.clickDeletePageHandle },
                                 '\u5220\u9664'
                             )
                         )
                     ),
-                    _react2.default.createElement(
+                    false && _react2.default.createElement(
                         'button',
                         { type: 'button', className: 'btn btn-danger', onClick: this.clickCreateDB },
                         '\u521D\u59CB\u6570\u636E\u5E93'
@@ -22612,38 +22669,12 @@ Object.defineProperty(exports, "__esModule", {
 /**
  * 保存页面类型
  */
-var FETCH_SAVE_PAGETYPE = exports.FETCH_SAVE_PAGETYPE = function FETCH_SAVE_PAGETYPE(_ref) {
-    var value = _ref.value;
 
+var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
     var setting = {
         url: '/pagetype',
         type: 'post',
-        data: {
-            name: value,
-            type: 'save'
-        },
-        dataType: 'json'
-    };
-
-    return new Promise(function (resolve, reject) {
-        $.ajax(setting).done(function (data) {
-            resolve(data);
-        }).fail(function (data) {
-            reject(data);
-        });
-    });
-};
-
-/**
- * 查询 读取页面类型
- */
-var FETCH_SEARCH_PAGETYPE = exports.FETCH_SEARCH_PAGETYPE = function FETCH_SEARCH_PAGETYPE() {
-    var setting = {
-        url: '/pagetype',
-        type: 'post',
-        data: {
-            type: 'search'
-        },
+        data: data,
         dataType: 'json'
     };
 

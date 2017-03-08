@@ -1,6 +1,10 @@
 import mongodb from 'mongodb'
 const server = new mongodb.Server('localhost', 27017,{auto_reconnect: true})
 // const db = new mongodb.Db('pagetype', server, {safe: true})
+const ErrorMessage = {
+    open: '打开数据失败',
+    search: '查询数据失败'
+}
 
 const DB = {
     save({value, dbName, colName}){
@@ -8,13 +12,24 @@ const DB = {
         return new Promise( (resolve,reject) => {
             db.open( (dberr, db) => {
                 if(dberr){
-                    reject(dberr)
+                    reject(`save ${ErrorMessage.open} ${dberr}`)
                     // throw dberr
                 } else {
                     db.collection(colName, (coerr, collection) => {
-                        collection.insert({"cn":"详情页","en":"detail"}, (inerr, docs) => {
-                            resolve(docs)
-                            db.close()
+                        
+                        let id = 0
+                        // 实现自增id，查询最后一个，然后把id+1
+                        collection.find({}).toArray( (searchErr, result) => {
+                            // console.log(result)
+                            if(result.length){
+                                id = result[result.length -1].id + 1
+                            }
+
+                            collection.insert({name:value,id:id}, (inerr, docs) => {
+                                resolve(docs)
+                                db.close()
+                            })
+
                         })
                     })
                 }
@@ -26,44 +41,51 @@ const DB = {
         return new Promise( (resolve,reject) => {
             db.open( (dberr, db) => {
                 if(dberr){
-                    reject(dberr)
+                    reject(`search ${ErrorMessage.open} ${dberr}`)
                     // throw dberr
                 } else {
                     db.collection(colName, (coerr, collection) => {
                         collection.find({}).toArray( (searchErr, result) => {
-                            console.log(result)
                             if(searchErr){
-                                reject(dberr)
+                                reject(`search ${ErrorMessage.search} ${dberr}`)
                             } else {
                                 resolve(result)
-                                result
                             }
+                            db.close()
                         })
                     })
                 }
             })
         })
     },
-    
+    delete({id, dbName, colName}){
+        const db = new mongodb.Db(dbName, server, {safe: true})
+        return new Promise( (resolve,reject) => {
+            db.open( (dberr, db) => {
+                if(dberr){
+                    reject(`delete ${ErrorMessage.open} ${dberr}`)
+                    // throw dberr
+                } else {
+                    db.collection(colName, (coerr, collection) => {
+                        collection.remove({id}, (delErr, result) => {
+                            if(delErr){
+                                reject(`delete ${ErrorMessage.search} ${dberr}`)
+                            } else {
+                                resolve(result)
+                            }
+                            db.close()
+                        })
+                    })
+                }
+            })
+        })
+    },
     /**
      * 初始化数据库
      * 创建库
      */
     init(){
         return false
-        // let dblist = ['pagetype', 'api']
-        // // const server = new mongodb.Server('localhost', 27017,{auto_reconnect: true})
-        // dblist.map(item => {
-        //     const db = new mongodb.Db(item, server, {safe: true})
-        //     db.open( (dberr, db) => {
-        //         if(dberr){
-        //             throw dberr
-        //         } else {
-        //             console.log(db)
-        //             db.close()
-        //         }
-        //     })
-        // })
     }
 }
 
