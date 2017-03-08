@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Navbar from './Navbar'
 import Pagelist from './Pagelist'
 import Apicontent from './Apicontent'
+import Edit from './Edit'
 
 class Root extends Component {
     render() {
@@ -11,6 +12,7 @@ class Root extends Component {
                 <Navbar list={nav} />
                 <Pagelist />
                 <Apicontent />
+                <Edit />
             </div>
         )
     }

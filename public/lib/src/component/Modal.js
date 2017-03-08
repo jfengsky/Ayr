@@ -3,6 +3,7 @@
  */
 
 import React, { Component, PropTypes } from 'react';
+import Modalpage from './Modalpage'
 
 class Modal extends Component {
         
@@ -18,7 +19,9 @@ class Modal extends Component {
                             </button>
                             <h4 className="modal-title" id="myLargeModalLabel">{title}</h4>
                         </div>
-                        <div className="modal-body"> ... </div>
+                        <div className="modal-body">
+                            <Modalpage />
+                        </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" onClick={cancel}>取消</button>
                             <button type="button" className="btn btn-primary">保存</button>

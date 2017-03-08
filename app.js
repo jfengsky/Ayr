@@ -3,6 +3,7 @@ import path from 'path'
 import Koa from 'koa'
 import logger from 'koa-logger'
 import json from 'koa-json'
+import send from 'koa-send'
 import bodyParser from 'koa-bodyparser'
 import views from 'koa-views'
 import staticServe from 'koa-static'
@@ -39,6 +40,12 @@ app.use(json())
 
 // body解析
 app.use(bodyParser())
+
+// 发送文件
+app.use(async (ctx, next) => {
+    ctx.send = send
+    await next()
+})
 
 app.use(index.routes())
 app.use(bookingnext.routes())
