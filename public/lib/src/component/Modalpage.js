@@ -51,7 +51,7 @@ class Modalpage extends Component {
                 </div>
                 <div className={codeError ? formErrorClassName : formClassName}>
                     <div className="col-sm-offset-2 col-sm-10">
-                        <textarea className="form-control" ref="pageCode" onFocus={this.pageCodeFocus} onBlur={this.pageCodeBlur} rows="10" placeholder="请粘贴代码"></textarea>
+                        <textarea className="form-control" ref="pageCode" onFocus={this.pageCodeFocus} onBlur={this.pageCodeBlur} rows="10" placeholder="请粘贴代码" defaultValue={this.props.code}></textarea>
                         <span>http://localhost:4000/</span>
                     </div>
                 </div>

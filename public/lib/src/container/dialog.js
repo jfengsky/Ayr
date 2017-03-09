@@ -8,7 +8,7 @@ import Modal from '../component/Modal'
 import { FETCH_PAGE_CODE } from '../store/request'
 
 const dialog = params =>  {
-    let {title} = params
+    let {title, code} = params
     let container = document.createElement('div')
     document.body.appendChild(container)
     const cancel = e => {
@@ -27,6 +27,7 @@ const dialog = params =>  {
             title={title}
             cancel={cancel}
             save={saveCode}
+            code={code}
         />,
         container
     )

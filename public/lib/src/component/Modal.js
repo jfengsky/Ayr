@@ -12,7 +12,8 @@ class Modal extends Component {
     // }
     
     render() {
-        let { cancel, title, save } = this.props
+        let { cancel, title, save, code} = this.props
+
         return (
             <div className="modal fade in" style={{display: 'block',backgroundColor: 'rgba(0,0,0,.5)'}}>
                 <div className="modal-dialog modal-lg">
@@ -24,7 +25,7 @@ class Modal extends Component {
                             <h4 className="modal-title" id="myLargeModalLabel">{title}</h4>
                         </div>
                         <div className="modal-body">
-                            <Modalpage />
+                            <Modalpage code={code} />
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-default" onClick={cancel}>取消</button>

@@ -5,6 +5,8 @@
 import React, { Component, PropTypes } from 'react';
 import { FETCH_PAGE_CODE } from '../store/request'
 import { getPageType } from '../store/getInitState'
+import { SET_PAGE_INFO } from '../store/setInitState'
+import dialog from '../container/dialog'
 
 class Pagelist extends Component {
 
@@ -68,7 +70,11 @@ class Pagelist extends Component {
                                         <td><a href={pageUrl} target="_blank">{name}.html</a></td>
                                         <td>{pageTypeName}</td>
                                         <td>{desc}</td>
-                                        <td onClick={this.modifyClickHandle}>修改</td>
+                                        <td>
+                                            <span className="btn-link" onClick={this.modifyClickHandle.bind(this, item)}>修改</span>
+                                            {' '}
+                                            <span className="btn-link">删除</span>
+                                        </td>
                                     </tr>
                                 )
                             })
@@ -93,8 +99,36 @@ class Pagelist extends Component {
         return typeName
     }
 
-    modifyClickHandle = e => {
-        
+    /**
+     * 修改页面
+     */
+    modifyClickHandle = (item) => {
+        let {
+            name,
+            desc,
+            type
+        } = item
+        SET_PAGE_INFO({
+            name,
+            desc,
+            type
+        })
+
+        FETCH_PAGE_CODE({
+            type: 'modify',
+            pageName: name
+        }).then( data => {
+            if(data.ok === 1) {
+                dialog({
+                    title: '修改',
+                    code: data.data
+                })
+                
+                SET_PAGE_INFO({
+                    code: data.data
+                })
+            }
+        })
     }
 }
 

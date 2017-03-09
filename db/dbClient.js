@@ -102,9 +102,12 @@ const DB = {
         return new Promise( (resolve,reject) => {
             MongoClient.connect(URL + dbName, (err, db) => {
                 const collection = db.collection(colName)
-                let id = 0
+                let where = {}
+                if(id >= 0){
+                    where = {id: id - 0}
+                }
                 // 实现自增id，查询最后一个，然后把id+1
-                collection.find({}).toArray( (searchErr, result) => {
+                collection.find(where).toArray( (searchErr, result) => {
                     resolve(result)
                     db.close()
                 })

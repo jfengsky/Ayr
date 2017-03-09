@@ -9900,7 +9900,9 @@ var Modal = function (_Component) {
             var _props = this.props,
                 cancel = _props.cancel,
                 title = _props.title,
-                save = _props.save;
+                save = _props.save,
+                code = _props.code;
+
 
             return _react2.default.createElement(
                 'div',
@@ -9932,7 +9934,7 @@ var Modal = function (_Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'modal-body' },
-                            _react2.default.createElement(_Modalpage2.default, null)
+                            _react2.default.createElement(_Modalpage2.default, { code: code })
                         ),
                         _react2.default.createElement(
                             'div',
@@ -10153,7 +10155,7 @@ var Modalpage = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-offset-2 col-sm-10' },
-                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onFocus: this.pageCodeFocus, onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801' }),
+                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onFocus: this.pageCodeFocus, onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801', defaultValue: this.props.code }),
                         _react2.default.createElement(
                             'span',
                             null,
@@ -10320,6 +10322,12 @@ var _request = __webpack_require__(26);
 
 var _getInitState = __webpack_require__(92);
 
+var _setInitState = __webpack_require__(93);
+
+var _dialog = __webpack_require__(91);
+
+var _dialog2 = _interopRequireDefault(_dialog);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10349,7 +10357,33 @@ var Pagelist = function (_Component) {
             return typeName;
         };
 
-        _this.modifyClickHandle = function (e) {};
+        _this.modifyClickHandle = function (item) {
+            var name = item.name,
+                desc = item.desc,
+                type = item.type;
+
+            (0, _setInitState.SET_PAGE_INFO)({
+                name: name,
+                desc: desc,
+                type: type
+            });
+
+            (0, _request.FETCH_PAGE_CODE)({
+                type: 'modify',
+                pageName: name
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    (0, _dialog2.default)({
+                        title: '修改',
+                        code: data.data
+                    });
+
+                    (0, _setInitState.SET_PAGE_INFO)({
+                        code: data.data
+                    });
+                }
+            });
+        };
 
         _this.state = {
             pageList: [],
@@ -10469,8 +10503,18 @@ var Pagelist = function (_Component) {
                                 ),
                                 _react2.default.createElement(
                                     'td',
-                                    { onClick: _this3.modifyClickHandle },
-                                    '\u4FEE\u6539'
+                                    null,
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'btn-link', onClick: _this3.modifyClickHandle.bind(_this3, item) },
+                                        '\u4FEE\u6539'
+                                    ),
+                                    ' ',
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'btn-link' },
+                                        '\u5220\u9664'
+                                    )
                                 )
                             );
                         })
@@ -10481,6 +10525,11 @@ var Pagelist = function (_Component) {
 
         /**
          * 获取页面类型的名字
+         */
+
+
+        /**
+         * 修改页面
          */
 
     }]);
@@ -10601,7 +10650,8 @@ var _request = __webpack_require__(26);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var dialog = function dialog(params) {
-    var title = params.title;
+    var title = params.title,
+        code = params.code;
 
     var container = document.createElement('div');
     document.body.appendChild(container);
@@ -10618,7 +10668,8 @@ var dialog = function dialog(params) {
     _reactDom2.default.render(_react2.default.createElement(_Modal2.default, {
         title: title,
         cancel: cancel,
-        save: saveCode
+        save: saveCode,
+        code: code
     }), container);
 };
 
@@ -10673,7 +10724,7 @@ var getPageType = exports.getPageType = function getPageType() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SET_PAGET_TYPE = exports.SET_INITSTATE = undefined;
+exports.SET_PAGE_INFO = exports.SET_PAGET_TYPE = exports.SET_INITSTATE = undefined;
 
 var _initState = __webpack_require__(33);
 
@@ -10689,6 +10740,19 @@ var SET_INITSTATE = exports.SET_INITSTATE = function SET_INITSTATE(key, value) {
 
 var SET_PAGET_TYPE = exports.SET_PAGET_TYPE = function SET_PAGET_TYPE(data) {
     _initState2.default['pageType'] = data;
+};
+
+var SET_PAGE_INFO = exports.SET_PAGE_INFO = function SET_PAGE_INFO(data) {
+    var name = data.name,
+        desc = data.desc,
+        type = data.type,
+        code = data.code;
+
+
+    name && (_initState2.default['mPageName'] = name);
+    desc && (_initState2.default['mPageDesc'] = desc);
+    type >= 0 && (_initState2.default['mPageType'] = type);
+    code && (_initState2.default['mPageCode'] = desc);
 };
 
 /***/ }),

@@ -99,6 +99,15 @@ index.get('/', async ctx => {
                 ok: 1
             }
         })
+    } else if(type === 'modify') {
+        await file.read({
+            name: pageName
+        }).then( result => {
+            ctx.body = {
+                ok: 1,
+                data: result
+            }
+        })
     }
 
     
