@@ -17,3 +17,7 @@ export const getPageCode = () => {
         pageCode: mPageCode
     }
 }
+
+export const getPageType = () => {
+    return initState.pageType
+}

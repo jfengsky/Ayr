@@ -6,7 +6,7 @@ import Edit from './Edit'
 
 class Root extends Component {
     render() {
-        let { nav } = this.props.data
+        let { nav, pageType } = this.props.data
         return (
             <div>
                 <Navbar list={nav} />

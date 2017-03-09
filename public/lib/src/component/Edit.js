@@ -4,26 +4,13 @@
 
 import React, { Component, PropTypes } from 'react'
 import { FETCH_PAGETYPE } from '../store/request'
+import { getPageType } from '../store/getInitState'
 class Edit extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            typelist: []
+            typelist: getPageType()
         }
-    }
-    
-    componentDidMount() {
-
-        // 请求类型数据
-        FETCH_PAGETYPE({
-            type: 'search'
-        }).then( data => {
-            if(data.ok === 1) {
-                this.setState({
-                    typelist: data.data
-                })
-            }
-        })
     }
     
     render() {
@@ -77,13 +64,6 @@ class Edit extends Component {
             })
         }
     }
-
-    /**
-     * 初始化数据库，慎用
-     */
-    // clickCreateDB = e => {
-    //     FETCH_CREATE_DB()
-    // }
 
     /**
      * 查询页面类型

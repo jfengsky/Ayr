@@ -4,13 +4,15 @@
 
 import React, { Component, PropTypes } from 'react';
 import { FETCH_PAGE_CODE } from '../store/request'
+import { getPageType } from '../store/getInitState'
 
 class Pagelist extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            pageList: []
+            pageList: [],
+            pageType: getPageType()
         }
     }
     
@@ -59,11 +61,12 @@ class Pagelist extends Component {
                                     type
                                 } = item
                                 let pageUrl = `/pages/${name}.html`
+                                let pageTypeName = this.getTypeName(type)
                                 return (
                                     <tr key={index}>
                                         <th scope="row">{index + 1}</th>
                                         <td><a href={pageUrl} target="_blank">{name}.html</a></td>
-                                        <td>{type}</td>
+                                        <td>{pageTypeName}</td>
                                         <td>{desc}</td>
                                         <td onClick={this.modifyClickHandle}>修改</td>
                                     </tr>
@@ -74,6 +77,20 @@ class Pagelist extends Component {
                 </table>
             </div>
         )
+    }
+
+    /**
+     * 获取页面类型的名字
+     */
+    getTypeName = type => {
+        let typeName = ''
+        this.state.pageType.some( item => {
+            if( item.id == type) {
+                typeName = item.name
+                return true
+            }
+        })
+        return typeName
     }
 
     modifyClickHandle = e => {

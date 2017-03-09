@@ -1140,7 +1140,7 @@ var CallbackQueue = __webpack_require__(60);
 var PooledClass = __webpack_require__(15);
 var ReactFeatureFlags = __webpack_require__(65);
 var ReactReconciler = __webpack_require__(19);
-var Transaction = __webpack_require__(29);
+var Transaction = __webpack_require__(30);
 
 var invariant = __webpack_require__(1);
 
@@ -2436,7 +2436,7 @@ module.exports = reactProdInvariant;
 
 
 var DOMNamespaces = __webpack_require__(36);
-var setInnerHTML = __webpack_require__(31);
+var setInnerHTML = __webpack_require__(32);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(43);
 var setTextContent = __webpack_require__(78);
@@ -2855,7 +2855,7 @@ module.exports = emptyObject;
 
 var _prodInvariant = __webpack_require__(3);
 
-var EventPluginRegistry = __webpack_require__(26);
+var EventPluginRegistry = __webpack_require__(27);
 var EventPluginUtils = __webpack_require__(37);
 var ReactErrorUtils = __webpack_require__(41);
 
@@ -3382,6 +3382,79 @@ module.exports = SyntheticUIEvent;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * 请求集合
+ */
+
+/**
+ * 保存页面类型
+ */
+
+var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
+    var setting = {
+        url: '/pagetype',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 创建保存页面代码
+ * @param {Object} data 
+ */
+var FETCH_PAGE_CODE = exports.FETCH_PAGE_CODE = function FETCH_PAGE_CODE(data) {
+    var setting = {
+        url: '/pageCode',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 初始化数据库
+ */
+var FETCH_CREATE_DB = exports.FETCH_CREATE_DB = function FETCH_CREATE_DB() {
+    var setting = {
+        url: '/createdb',
+        type: 'post'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -3639,7 +3712,7 @@ module.exports = EventPluginRegistry;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3657,7 +3730,7 @@ module.exports = EventPluginRegistry;
 
 var _assign = __webpack_require__(4);
 
-var EventPluginRegistry = __webpack_require__(26);
+var EventPluginRegistry = __webpack_require__(27);
 var ReactEventEmitterMixin = __webpack_require__(141);
 var ViewportMetrics = __webpack_require__(71);
 
@@ -3972,7 +4045,7 @@ var ReactBrowserEventEmitter = _assign({}, ReactEventEmitterMixin, {
 module.exports = ReactBrowserEventEmitter;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4049,7 +4122,7 @@ SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 module.exports = SyntheticMouseEvent;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4280,7 +4353,7 @@ module.exports = TransactionImpl;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4408,7 +4481,7 @@ function escapeTextContentForBrowser(text) {
 module.exports = escapeTextContentForBrowser;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4511,7 +4584,7 @@ if (ExecutionEnvironment.canUseDOM) {
 module.exports = setInnerHTML;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4521,6 +4594,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var initState = {
+
+    pageType: null,
 
     // 创建修改页面时的全局变量
     mPageName: null,
@@ -4545,79 +4620,6 @@ var initState = {
 };
 
 exports.default = initState;
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * 请求集合
- */
-
-/**
- * 保存页面类型
- */
-
-var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
-    var setting = {
-        url: '/pagetype',
-        type: 'post',
-        data: data,
-        dataType: 'json'
-    };
-
-    return new Promise(function (resolve, reject) {
-        $.ajax(setting).done(function (data) {
-            resolve(data);
-        }).fail(function (data) {
-            reject(data);
-        });
-    });
-};
-
-/**
- * 创建保存页面代码
- * @param {Object} data 
- */
-var FETCH_PAGE_CODE = exports.FETCH_PAGE_CODE = function FETCH_PAGE_CODE(data) {
-    var setting = {
-        url: '/pageCode',
-        type: 'post',
-        data: data,
-        dataType: 'json'
-    };
-
-    return new Promise(function (resolve, reject) {
-        $.ajax(setting).done(function (data) {
-            resolve(data);
-        }).fail(function (data) {
-            reject(data);
-        });
-    });
-};
-
-/**
- * 初始化数据库
- */
-var FETCH_CREATE_DB = exports.FETCH_CREATE_DB = function FETCH_CREATE_DB() {
-    var setting = {
-        url: '/createdb',
-        type: 'post'
-    };
-    return new Promise(function (resolve, reject) {
-        $.ajax(setting).done(function (data) {
-            resolve(data);
-        }).fail(function (data) {
-            reject(data);
-        });
-    });
-};
 
 /***/ }),
 /* 34 */
@@ -4715,7 +4717,7 @@ var ReactDOMComponentTree = __webpack_require__(5);
 var ReactInstrumentation = __webpack_require__(8);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(43);
-var setInnerHTML = __webpack_require__(31);
+var setInnerHTML = __webpack_require__(32);
 var setTextContent = __webpack_require__(78);
 
 function getNodeAfter(parentNode, node) {
@@ -7976,7 +7978,7 @@ var _prodInvariant = __webpack_require__(3);
 var DOMLazyTree = __webpack_require__(18);
 var DOMProperty = __webpack_require__(14);
 var React = __webpack_require__(20);
-var ReactBrowserEventEmitter = __webpack_require__(27);
+var ReactBrowserEventEmitter = __webpack_require__(28);
 var ReactCurrentOwner = __webpack_require__(11);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMContainerInfo = __webpack_require__(124);
@@ -7992,7 +7994,7 @@ var ReactUpdates = __webpack_require__(10);
 var emptyObject = __webpack_require__(21);
 var instantiateReactComponent = __webpack_require__(76);
 var invariant = __webpack_require__(1);
-var setInnerHTML = __webpack_require__(31);
+var setInnerHTML = __webpack_require__(32);
 var shouldUpdateReactComponent = __webpack_require__(48);
 var warning = __webpack_require__(2);
 
@@ -8979,8 +8981,8 @@ module.exports = isTextInputElement;
 
 
 var ExecutionEnvironment = __webpack_require__(6);
-var escapeTextContentForBrowser = __webpack_require__(30);
-var setInnerHTML = __webpack_require__(31);
+var escapeTextContentForBrowser = __webpack_require__(31);
+var setInnerHTML = __webpack_require__(32);
 
 /**
  * Set the textContent property of a node, ensuring that whitespace is preserved
@@ -9502,7 +9504,7 @@ var _reactDom = __webpack_require__(58);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _initState = __webpack_require__(32);
+var _initState = __webpack_require__(33);
 
 var _initState2 = _interopRequireDefault(_initState);
 
@@ -9510,13 +9512,25 @@ var _Root = __webpack_require__(90);
 
 var _Root2 = _interopRequireDefault(_Root);
 
+var _request = __webpack_require__(26);
+
+var _setInitState = __webpack_require__(93);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var render = function render(data) {
     _reactDom2.default.render(_react2.default.createElement(_Root2.default, { data: data }), document.getElementById('root'));
 };
 
-render(_initState2.default);
+// 请求页面类型
+(0, _request.FETCH_PAGETYPE)({
+    type: 'search'
+}).then(function (data) {
+    if (data.ok === 1) {
+        (0, _setInitState.SET_PAGET_TYPE)(data.data);
+        render(_initState2.default);
+    }
+});
 
 /***/ }),
 /* 84 */
@@ -9628,7 +9642,9 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _request = __webpack_require__(33);
+var _request = __webpack_require__(26);
+
+var _getInitState = __webpack_require__(92);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9708,28 +9724,12 @@ var Edit = function (_Component) {
         };
 
         _this.state = {
-            typelist: []
+            typelist: (0, _getInitState.getPageType)()
         };
         return _this;
     }
 
     _createClass(Edit, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            // 请求类型数据
-            (0, _request.FETCH_PAGETYPE)({
-                type: 'search'
-            }).then(function (data) {
-                if (data.ok === 1) {
-                    _this2.setState({
-                        typelist: data.data
-                    });
-                }
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -9800,13 +9800,6 @@ var Edit = function (_Component) {
                 )
             );
         }
-
-        /**
-         * 初始化数据库，慎用
-         */
-        // clickCreateDB = e => {
-        //     FETCH_CREATE_DB()
-        // }
 
         /**
          * 查询页面类型
@@ -9989,9 +9982,9 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _request = __webpack_require__(33);
-
 var _setInitState = __webpack_require__(93);
+
+var _getInitState = __webpack_require__(92);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10004,6 +9997,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * 新建页面表单
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
+
+// import { FETCH_PAGETYPE } from '../store/request'
+
 
 var Modalpage = function (_Component) {
     _inherits(Modalpage, _Component);
@@ -10069,36 +10065,15 @@ var Modalpage = function (_Component) {
         };
 
         _this.state = {
-            typelist: [],
+            typelist: (0, _getInitState.getPageType)(),
             nameError: false,
             descError: false,
             codeError: false
         };
         return _this;
     }
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         ...nextProps
-    //     })
-    // }
 
     _createClass(Modalpage, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            // 请求类型数据
-            (0, _request.FETCH_PAGETYPE)({
-                type: 'search'
-            }).then(function (data) {
-                if (data.ok === 1) {
-                    _this2.setState({
-                        typelist: data.data
-                    });
-                }
-            });
-        }
-    }, {
         key: 'render',
         value: function render() {
             var _React$createElement;
@@ -10178,7 +10153,12 @@ var Modalpage = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-offset-2 col-sm-10' },
-                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onFocus: this.pageCodeFocus, onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801' })
+                        _react2.default.createElement('textarea', { className: 'form-control', ref: 'pageCode', onFocus: this.pageCodeFocus, onBlur: this.pageCodeBlur, rows: '10', placeholder: '\u8BF7\u7C98\u8D34\u4EE3\u7801' }),
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            'http://localhost:4000/'
+                        )
                     )
                 )
             );
@@ -10336,7 +10316,9 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _request = __webpack_require__(33);
+var _request = __webpack_require__(26);
+
+var _getInitState = __webpack_require__(92);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10356,10 +10338,22 @@ var Pagelist = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Pagelist.__proto__ || Object.getPrototypeOf(Pagelist)).call(this, props));
 
+        _this.getTypeName = function (type) {
+            var typeName = '';
+            _this.state.pageType.some(function (item) {
+                if (item.id == type) {
+                    typeName = item.name;
+                    return true;
+                }
+            });
+            return typeName;
+        };
+
         _this.modifyClickHandle = function (e) {};
 
         _this.state = {
-            pageList: []
+            pageList: [],
+            pageType: (0, _getInitState.getPageType)()
         };
         return _this;
     }
@@ -10444,6 +10438,7 @@ var Pagelist = function (_Component) {
                                 type = item.type;
 
                             var pageUrl = '/pages/' + name + '.html';
+                            var pageTypeName = _this3.getTypeName(type);
                             return _react2.default.createElement(
                                 'tr',
                                 { key: index },
@@ -10465,7 +10460,7 @@ var Pagelist = function (_Component) {
                                 _react2.default.createElement(
                                     'td',
                                     null,
-                                    type
+                                    pageTypeName
                                 ),
                                 _react2.default.createElement(
                                     'td',
@@ -10483,6 +10478,11 @@ var Pagelist = function (_Component) {
                 )
             );
         }
+
+        /**
+         * 获取页面类型的名字
+         */
+
     }]);
 
     return Pagelist;
@@ -10545,7 +10545,9 @@ var Root = function (_Component) {
     _createClass(Root, [{
         key: 'render',
         value: function render() {
-            var nav = this.props.data.nav;
+            var _props$data = this.props.data,
+                nav = _props$data.nav,
+                pageType = _props$data.pageType;
 
             return _react2.default.createElement(
                 'div',
@@ -10594,7 +10596,7 @@ var _Modal = __webpack_require__(86);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
-var _request = __webpack_require__(33);
+var _request = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10632,9 +10634,9 @@ exports.default = dialog;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getPageCode = undefined;
+exports.getPageType = exports.getPageCode = undefined;
 
-var _initState = __webpack_require__(32);
+var _initState = __webpack_require__(33);
 
 var _initState2 = _interopRequireDefault(_initState);
 
@@ -10657,6 +10659,10 @@ var getPageCode = exports.getPageCode = function getPageCode() {
     };
 };
 
+var getPageType = exports.getPageType = function getPageType() {
+    return _initState2.default.pageType;
+};
+
 /***/ }),
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -10667,9 +10673,9 @@ var getPageCode = exports.getPageCode = function getPageCode() {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SET_INITSTATE = undefined;
+exports.SET_PAGET_TYPE = exports.SET_INITSTATE = undefined;
 
-var _initState = __webpack_require__(32);
+var _initState = __webpack_require__(33);
 
 var _initState2 = _interopRequireDefault(_initState);
 
@@ -10677,8 +10683,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var SET_INITSTATE = exports.SET_INITSTATE = function SET_INITSTATE(key, value) {
     _initState2.default[key] = value;
-    console.log('set initState: ' + key);
-    console.info(_initState2.default);
+    // console.log(`set initState: ${key}`)
+    // console.info(initState)
+};
+
+var SET_PAGET_TYPE = exports.SET_PAGET_TYPE = function SET_PAGET_TYPE(data) {
+    _initState2.default['pageType'] = data;
 };
 
 /***/ }),
@@ -12605,7 +12615,7 @@ module.exports = DefaultEventPluginOrder;
 
 var EventPropagators = __webpack_require__(23);
 var ReactDOMComponentTree = __webpack_require__(5);
-var SyntheticMouseEvent = __webpack_require__(28);
+var SyntheticMouseEvent = __webpack_require__(29);
 
 var eventTypes = {
   mouseEnter: {
@@ -14257,8 +14267,8 @@ var DOMNamespaces = __webpack_require__(36);
 var DOMProperty = __webpack_require__(14);
 var DOMPropertyOperations = __webpack_require__(61);
 var EventPluginHub = __webpack_require__(22);
-var EventPluginRegistry = __webpack_require__(26);
-var ReactBrowserEventEmitter = __webpack_require__(27);
+var EventPluginRegistry = __webpack_require__(27);
+var ReactBrowserEventEmitter = __webpack_require__(28);
 var ReactDOMComponentFlags = __webpack_require__(62);
 var ReactDOMComponentTree = __webpack_require__(5);
 var ReactDOMInput = __webpack_require__(128);
@@ -14270,7 +14280,7 @@ var ReactMultiChild = __webpack_require__(147);
 var ReactServerRenderingTransaction = __webpack_require__(152);
 
 var emptyFunction = __webpack_require__(9);
-var escapeTextContentForBrowser = __webpack_require__(30);
+var escapeTextContentForBrowser = __webpack_require__(31);
 var invariant = __webpack_require__(1);
 var isEventSupported = __webpack_require__(47);
 var shallowEqual = __webpack_require__(34);
@@ -16204,7 +16214,7 @@ var DOMChildrenOperations = __webpack_require__(35);
 var DOMLazyTree = __webpack_require__(18);
 var ReactDOMComponentTree = __webpack_require__(5);
 
-var escapeTextContentForBrowser = __webpack_require__(30);
+var escapeTextContentForBrowser = __webpack_require__(31);
 var invariant = __webpack_require__(1);
 var validateDOMNesting = __webpack_require__(49);
 
@@ -16676,7 +16686,7 @@ module.exports = {
 
 
 var DOMProperty = __webpack_require__(14);
-var EventPluginRegistry = __webpack_require__(26);
+var EventPluginRegistry = __webpack_require__(27);
 var ReactComponentTreeHook = __webpack_require__(7);
 
 var warning = __webpack_require__(2);
@@ -17163,7 +17173,7 @@ module.exports = ReactDebugTool;
 var _assign = __webpack_require__(4);
 
 var ReactUpdates = __webpack_require__(10);
-var Transaction = __webpack_require__(29);
+var Transaction = __webpack_require__(30);
 
 var emptyFunction = __webpack_require__(9);
 
@@ -17591,7 +17601,7 @@ var EventPluginHub = __webpack_require__(22);
 var EventPluginUtils = __webpack_require__(37);
 var ReactComponentEnvironment = __webpack_require__(40);
 var ReactEmptyComponent = __webpack_require__(64);
-var ReactBrowserEventEmitter = __webpack_require__(27);
+var ReactBrowserEventEmitter = __webpack_require__(28);
 var ReactHostComponent = __webpack_require__(66);
 var ReactUpdates = __webpack_require__(10);
 
@@ -18314,10 +18324,10 @@ var _assign = __webpack_require__(4);
 
 var CallbackQueue = __webpack_require__(60);
 var PooledClass = __webpack_require__(15);
-var ReactBrowserEventEmitter = __webpack_require__(27);
+var ReactBrowserEventEmitter = __webpack_require__(28);
 var ReactInputSelection = __webpack_require__(67);
 var ReactInstrumentation = __webpack_require__(8);
-var Transaction = __webpack_require__(29);
+var Transaction = __webpack_require__(30);
 var ReactUpdateQueue = __webpack_require__(42);
 
 /**
@@ -18591,7 +18601,7 @@ module.exports = ReactRef;
 var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(15);
-var Transaction = __webpack_require__(29);
+var Transaction = __webpack_require__(30);
 var ReactInstrumentation = __webpack_require__(8);
 var ReactServerUpdateQueue = __webpack_require__(153);
 
@@ -19362,7 +19372,7 @@ var SyntheticClipboardEvent = __webpack_require__(159);
 var SyntheticEvent = __webpack_require__(12);
 var SyntheticFocusEvent = __webpack_require__(162);
 var SyntheticKeyboardEvent = __webpack_require__(164);
-var SyntheticMouseEvent = __webpack_require__(28);
+var SyntheticMouseEvent = __webpack_require__(29);
 var SyntheticDragEvent = __webpack_require__(161);
 var SyntheticTouchEvent = __webpack_require__(165);
 var SyntheticTransitionEvent = __webpack_require__(166);
@@ -19713,7 +19723,7 @@ module.exports = SyntheticCompositionEvent;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(28);
+var SyntheticMouseEvent = __webpack_require__(29);
 
 /**
  * @interface DragEvent
@@ -20020,7 +20030,7 @@ module.exports = SyntheticTransitionEvent;
 
 
 
-var SyntheticMouseEvent = __webpack_require__(28);
+var SyntheticMouseEvent = __webpack_require__(29);
 
 /**
  * @interface WheelEvent
@@ -20818,7 +20828,7 @@ module.exports = getVendorPrefixedEventName;
 
 
 
-var escapeTextContentForBrowser = __webpack_require__(30);
+var escapeTextContentForBrowser = __webpack_require__(31);
 
 /**
  * Escapes attribute value to prevent scripting attacks.

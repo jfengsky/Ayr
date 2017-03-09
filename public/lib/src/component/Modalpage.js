@@ -3,37 +3,19 @@
  */
 
 import React, { Component, PropTypes } from 'react';
-import { FETCH_PAGETYPE } from '../store/request'
+// import { FETCH_PAGETYPE } from '../store/request'
 import { SET_INITSTATE } from '../store/setInitState'
+import { getPageType } from '../store/getInitState'
 
 class Modalpage extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            typelist: [],
+            typelist: getPageType(),
             nameError: false,
             descError: false,
             codeError: false
         }
-    }
-    // componentWillReceiveProps(nextProps) {
-    //     this.setState({
-    //         ...nextProps
-    //     })
-    // }
-    
-    componentDidMount() {
-        // 请求类型数据
-        FETCH_PAGETYPE({
-            type: 'search'
-        }).then( data => {
-            if(data.ok === 1) {
-                this.setState({
-                    typelist: data.data
-                })
-            }
-        })
-
     }
     
     render() {
@@ -70,6 +52,7 @@ class Modalpage extends Component {
                 <div className={codeError ? formErrorClassName : formClassName}>
                     <div className="col-sm-offset-2 col-sm-10">
                         <textarea className="form-control" ref="pageCode" onFocus={this.pageCodeFocus} onBlur={this.pageCodeBlur} rows="10" placeholder="请粘贴代码"></textarea>
+                        <span>http://localhost:4000/</span>
                     </div>
                 </div>
             </form>

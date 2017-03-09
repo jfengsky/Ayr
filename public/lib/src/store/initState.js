@@ -1,5 +1,7 @@
 const initState = {
     
+    pageType: null,
+
     // 创建修改页面时的全局变量
     mPageName: null,
     mPageType: 0,
