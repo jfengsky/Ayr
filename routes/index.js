@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import indexHtml from './rendHtml'
-import DB from '../db/db'
+// import DB from '../db/db'
+import DB from '../db/dbClient'
 import file from '../bin/file'
 
 const DBNAME = 'AyrData'
