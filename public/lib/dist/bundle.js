@@ -4585,7 +4585,7 @@ var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
  * 创建保存页面代码
  * @param {Object} data 
  */
-var FETCH_SAVE_CODE = exports.FETCH_SAVE_CODE = function FETCH_SAVE_CODE(data) {
+var FETCH_PAGE_CODE = exports.FETCH_PAGE_CODE = function FETCH_PAGE_CODE(data) {
     var setting = {
         url: '/pageCode',
         type: 'post',
@@ -10561,6 +10561,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /**
+                                                                                                                                                                                                                                                                   * 初始化弹出层组件
+                                                                                                                                                                                                                                                                   */
+
 var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
@@ -10577,10 +10581,6 @@ var _request = __webpack_require__(33);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * 初始化弹出层组件
- */
-
 var dialog = function dialog(params) {
     var title = params.title;
 
@@ -10590,8 +10590,10 @@ var dialog = function dialog(params) {
         _reactDom2.default.unmountComponentAtNode(container);
     };
     var saveCode = function saveCode(data) {
-        (0, _request.FETCH_SAVE_CODE)(data).then(function (_data) {
-            console.log(_data);
+        (0, _request.FETCH_PAGE_CODE)(_extends({}, data, {
+            type: 'save'
+        })).then(function (_data) {
+            cancel();
         });
     };
     _reactDom2.default.render(_react2.default.createElement(_Modal2.default, {

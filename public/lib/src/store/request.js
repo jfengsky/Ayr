@@ -27,7 +27,7 @@ export const FETCH_PAGETYPE = data => {
  * 创建保存页面代码
  * @param {Object} data 
  */
-export const FETCH_SAVE_CODE = data => {
+export const FETCH_PAGE_CODE = data => {
     let setting = {
         url: '/pageCode',
         type: 'post',

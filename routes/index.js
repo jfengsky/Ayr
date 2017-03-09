@@ -60,22 +60,36 @@ index.get('/', async ctx => {
     }
 
 }).post('/pageCode', async ctx => {
+    const colName = 'pageCode'
     let {
         pageName,
         pageType,
         pageDesc,
-        pageCode
+        pageCode,
+        type
     } = ctx.request.body
-    await file.write({
-        name: pageName,
-        code: pageCode
-    }).then( data => {
-        ctx.body = {
-            ok: 1
-        }
-    }).catch(err =>{
-        throw err
-    })
+
+    if(type === 'save') {
+        await file.write({
+            name: pageName,
+            code: pageCode
+        }).then( async data => {
+
+            await DB.pageSave({
+                dbName:DBNAME,
+                colName,
+                name: pageName,
+                type: pageType,
+                desc: pageDesc
+            }).then( result => {
+                ctx.body = result
+            })
+        }).catch(err =>{
+            throw err
+        })
+    }
+
+    
     
 }).post('/createdb', async ctx => {
     DB.init()

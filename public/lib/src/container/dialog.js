@@ -5,7 +5,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Modal from '../component/Modal'
-import { FETCH_SAVE_CODE } from '../store/request'
+import { FETCH_PAGE_CODE } from '../store/request'
 
 const dialog = params =>  {
     let {title} = params
@@ -15,8 +15,11 @@ const dialog = params =>  {
         ReactDOM.unmountComponentAtNode(container)
     }
     const saveCode = data => {
-        FETCH_SAVE_CODE(data).then(_data => {
-            console.log(_data)
+        FETCH_PAGE_CODE({
+            ...data,
+            type: 'save'
+        }).then(_data => {
+            cancel()
         })
     }
     ReactDOM.render(
