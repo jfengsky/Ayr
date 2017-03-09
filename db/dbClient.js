@@ -98,6 +98,20 @@ const DB = {
         })
     },
 
+    pageSearch({ dbName, colName, id }){
+        return new Promise( (resolve,reject) => {
+            MongoClient.connect(URL + dbName, (err, db) => {
+                const collection = db.collection(colName)
+                let id = 0
+                // 实现自增id，查询最后一个，然后把id+1
+                collection.find({}).toArray( (searchErr, result) => {
+                    resolve(result)
+                    db.close()
+                })
+            })
+        })
+    },
+
     init(){
         MongoClient.connect(url, (err, db) => {
             console.log(err)

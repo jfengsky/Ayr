@@ -10336,6 +10336,8 @@ var _react = __webpack_require__(13);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _request = __webpack_require__(33);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10349,121 +10351,136 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Pagelist = function (_Component) {
     _inherits(Pagelist, _Component);
 
-    function Pagelist() {
+    function Pagelist(props) {
         _classCallCheck(this, Pagelist);
 
-        return _possibleConstructorReturn(this, (Pagelist.__proto__ || Object.getPrototypeOf(Pagelist)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Pagelist.__proto__ || Object.getPrototypeOf(Pagelist)).call(this, props));
+
+        _this.modifyClickHandle = function (e) {};
+
+        _this.state = {
+            pageList: []
+        };
+        return _this;
     }
 
     _createClass(Pagelist, [{
-        key: "render",
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            (0, _request.FETCH_PAGE_CODE)({
+                type: 'search'
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this2.setState({
+                        pageList: data.data
+                    });
+                }
+            });
+        }
+    }, {
+        key: 'render',
         value: function render() {
+            var _this3 = this;
+
+            var pageList = this.state.pageList;
+
+
             var paddingStyle = {
                 paddingTop: 60
             };
+
+            var isShowList = true;
+            if (!pageList.length) {
+                isShowList = false;
+            }
+
             return _react2.default.createElement(
-                "div",
-                { className: "container", style: paddingStyle, id: "home" },
+                'div',
+                { className: 'container', style: paddingStyle, id: 'home' },
                 _react2.default.createElement(
-                    "table",
-                    { className: "table" },
+                    'table',
+                    { className: 'table' },
                     _react2.default.createElement(
-                        "thead",
+                        'thead',
                         null,
                         _react2.default.createElement(
-                            "tr",
+                            'tr',
                             null,
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "#"
+                                '#'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "First Name"
+                                'Name'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "Last Name"
+                                'type'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "Username"
+                                'desc'
+                            ),
+                            _react2.default.createElement(
+                                'th',
+                                null,
+                                'edit'
                             )
                         )
                     ),
-                    _react2.default.createElement(
-                        "tbody",
+                    isShowList && _react2.default.createElement(
+                        'tbody',
                         null,
-                        _react2.default.createElement(
-                            "tr",
-                            null,
-                            _react2.default.createElement(
-                                "th",
-                                { scope: "row" },
-                                "1"
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                "Mark"
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                "Otto"
-                            ),
-                            _react2.default.createElement(
-                                "td",
-                                null,
-                                "@mdo"
-                            )
-                        )
+                        pageList.map(function (item, index) {
+                            var name = item.name,
+                                desc = item.desc,
+                                type = item.type;
+
+                            var pageUrl = '/pages/' + name + '.html';
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: index },
+                                _react2.default.createElement(
+                                    'th',
+                                    { scope: 'row' },
+                                    index + 1
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: pageUrl, target: '_blank' },
+                                        name,
+                                        '.html'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    type
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    desc
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    { onClick: _this3.modifyClickHandle },
+                                    '\u4FEE\u6539'
+                                )
+                            );
+                        })
                     )
-                ),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null),
-                _react2.default.createElement("br", null)
+                )
             );
         }
     }]);

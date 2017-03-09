@@ -66,7 +66,8 @@ index.get('/', async ctx => {
         pageType,
         pageDesc,
         pageCode,
-        type
+        type,
+        id
     } = ctx.request.body
 
     if(type === 'save') {
@@ -86,6 +87,17 @@ index.get('/', async ctx => {
             })
         }).catch(err =>{
             throw err
+        })
+    } else if(type === 'search') {
+        await DB.pageSearch({
+            dbName:DBNAME,
+            colName,
+            id
+        }).then( result => {
+            ctx.body = {
+                data: result,
+                ok: 1
+            }
         })
     }
 
