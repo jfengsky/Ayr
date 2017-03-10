@@ -23,3 +23,10 @@ export const SET_PAGE_INFO = data => {
     (type >= 0) && (initState['mPageType'] = type);
     code && (initState['mPageCode'] = desc);
 }
+
+export const CLEAR_PAGE_INFO = () => {
+    initState['mPageName'] = null
+    initState['mPageDesc'] = null
+    initState['mPageType'] = 0
+    initState['mPageCode'] = null
+}

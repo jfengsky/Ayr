@@ -5,23 +5,31 @@
 import React, { Component, PropTypes } from 'react';
 // import { FETCH_PAGETYPE } from '../store/request'
 import { SET_INITSTATE } from '../store/setInitState'
-import { getPageType } from '../store/getInitState'
+import { getPageType, getPageCode } from '../store/getInitState'
 
 class Modalpage extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            code: props.code,
             typelist: getPageType(),
             nameError: false,
             descError: false,
-            codeError: false
+            codeError: false,
+            ...getPageCode()
         }
     }
     
     render() {
-        let { nameError, descError, codeError} = this.state
+        let { code, pageDesc, pageName, pageType, nameError, descError, codeError} = this.state
         let formClassName = 'form-group'
         let formErrorClassName = `${formClassName} has-error`
+
+        // 有代码时是编辑状态
+        let isEdit = false
+        if(code){
+            isEdit = true
+        }
 
         return (
             <form className="form-horizontal">
@@ -29,24 +37,22 @@ class Modalpage extends Component {
                     <label htmlFor="pageName" className="col-sm-2 control-label">文件名</label>
                     <div className="col-sm-10">
                         <div className="input-group">
-                            <input type="text" className="form-control" ref="pageName" onFocus={this.pageNameFocus} onBlur={this.pageNameBlur} id="pageName" placeholder="请输入文件名" />
+                            <input type="text" className="form-control" ref="pageName" onFocus={this.pageNameFocus} onBlur={this.pageNameBlur} id="pageName" placeholder="请输入文件名" disabled={isEdit} defaultValue={pageName} />
                             <div className="input-group-addon">.html</div>
                         </div>
                     </div>
                 </div>
                 <div className="form-group">
                     <div className="col-sm-offset-2 col-sm-10">
-                        <select className="form-control" ref="pageType" onChange={this.pageTypeChange}>
-                            {
-                                this.state.typelist.map( ({name,id}, index) => <option value={id} key={index}>{name}</option>)
-                            }
+                        <select className="form-control" ref="pageType" onChange={this.pageTypeChange} defaultValue={pageType} >
+                            { this.state.typelist.map( ({name,id}, index) => <option value={id} key={index}>{name}</option>) }
                         </select>
                     </div>
                 </div>
                 <div className={descError ? formErrorClassName : formClassName}>
                     <label htmlFor="pageDesc" className="col-sm-2 control-label">页面描述</label>
                     <div className="col-sm-10">
-                        <input type="text" ref="pageDesc" className="form-control" ref="pageDesc" onFocus={this.pageDescFocus} onBlur={this.pageDescBlur} id="pageDesc" placeholder="请输入页面描述" />
+                        <input type="text" ref="pageDesc" className="form-control" ref="pageDesc" onFocus={this.pageDescFocus} onBlur={this.pageDescBlur} id="pageDesc" placeholder="请输入页面描述" defaultValue={pageDesc} />
                     </div>
                 </div>
                 <div className={codeError ? formErrorClassName : formClassName}>

@@ -6,6 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Modal from '../component/Modal'
 import { FETCH_PAGE_CODE } from '../store/request'
+import { CLEAR_PAGE_INFO } from '../store/setInitState'
 
 const dialog = params =>  {
     let {title, code} = params
@@ -13,6 +14,7 @@ const dialog = params =>  {
     document.body.appendChild(container)
     const cancel = e => {
         ReactDOM.unmountComponentAtNode(container)
+        CLEAR_PAGE_INFO()
     }
     const saveCode = data => {
         FETCH_PAGE_CODE({
