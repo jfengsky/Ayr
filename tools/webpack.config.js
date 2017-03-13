@@ -5,11 +5,10 @@ module.exports = {
     entry: {
         bundle: [
             './src/app.js'
-        ],
-        edit: './src/edit.js'
+        ]
     },
     output: {
-        path: './dist/',
+        path: './dest/',
         filename: '[name].js'
     },
     module: {

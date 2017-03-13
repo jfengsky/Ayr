@@ -1,6 +1,5 @@
 import Router from 'koa-router'
 import indexHtml from './rendHtml'
-import editHtml from './editHtml'
 // import DB from '../db/db'
 import DB from '../db/dbClient'
 import file from '../bin/file'

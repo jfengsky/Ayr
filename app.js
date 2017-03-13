@@ -22,9 +22,13 @@ const PUBLIC = __dirname + '/public/'
 // 代码静态目录
 const CODE = __dirname + '/code/'
 
+// 开发工具目录
+const TOOLS = __dirname + '/tools/'
+
 // 设置静态目录
 app.use(staticServe(PUBLIC))
 app.use(staticServe(CODE))
+app.use(staticServe(TOOLS))
 
 // 模板目录
 const VIEWS = __dirname + '/views'
