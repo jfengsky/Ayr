@@ -1,64 +1,68 @@
 import Router from 'koa-router'
 import indexHtml from './rendHtml'
 import editHtml from './editHtml'
+
+import pageTypeHandle from './pageTypeHandle'
+
 // import DB from '../db/db'
 import DB from '../db/dbClient'
 import file from '../bin/file'
-
-const DBNAME = 'AyrData'
 
 const index = new Router()
 index.get('/', async ctx => {
 
     await ctx.render('index',{title: indexHtml})
-    // ctx.body = 'koa2 test'
-    // await ctx.send(ctx, 'index.html', {root: '../views/index'})
-}).get('/test', async ctx => {
-    // ctx.body = ctx.render('index',{title: 'koa2 easy'})
-    ctx.body = 'test'
+
+}).get('/edit', async ctx => {
+    
+    await ctx.render('edit',{title: editHtml})
 }).post('/pagetype', async ctx => {
-    const colName = 'pageType'
-    let bodyParam = ctx.request.body
-    if(bodyParam.type === 'save'){
-        await DB.save({
-            value:bodyParam.name,
-            dbName: DBNAME, // 数据库
-            colName
-        }).then(data => {
-            ctx.body = data.result
-            ctx.body = {
-                ...data.result,
-                data: data.ops[0]
-            }
-        })
-    } else if(bodyParam.type === 'search') {
-        await DB.search({
-            dbName: DBNAME, // 数据库
-            colName
-        }).then(data => {
+    let result = await pageTypeHandle.init({
+        data: ctx.request.body
+    })
+    ctx.body = result
+    
 
-            // 过滤_id
-            let tempData = data.map( ({name, id}) => {
-                return {
-                    name,
-                    id
-                }
-            })
+    // if(bodyParam.type === 'save'){
+    //     await DB.save({
+    //         value:bodyParam.name,
+    //         dbName: DBNAME, // 数据库
+    //         colName
+    //     }).then(data => {
+    //         ctx.body = data.result
+    //         ctx.body = {
+    //             ...data.result,
+    //             data: data.ops[0]
+    //         }
+    //     })
+    // } else if(bodyParam.type === 'search') {
+    //     await DB.search({
+    //         dbName: DBNAME, // 数据库
+    //         colName
+    //     }).then(data => {
 
-            ctx.body = {
-                ok: 1,
-                data: tempData
-            }
-        })
-    } else if(bodyParam.type === 'delete') {
-        await DB.delete({
-            id: bodyParam.id - 0,
-            dbName: DBNAME, // 数据库
-            colName
-        }).then( data => {
-            ctx.body = data
-        })
-    }
+    //         // 过滤_id
+    //         let tempData = data.map( ({name, id}) => {
+    //             return {
+    //                 name,
+    //                 id
+    //             }
+    //         })
+
+    //         ctx.body = {
+    //             ok: 1,
+    //             data: tempData
+    //         }
+    //     })
+    // } else if(bodyParam.type === 'delete') {
+    //     await DB.delete({
+    //         id: bodyParam.id - 0,
+    //         dbName: DBNAME, // 数据库
+    //         colName
+    //     }).then( data => {
+    //         ctx.body = data
+    //     })
+    // }
 
 }).post('/pageCode', async ctx => {
     const colName = 'pageCode'
@@ -78,7 +82,7 @@ index.get('/', async ctx => {
         }).then( async data => {
 
             await DB.pageSave({
-                dbName:DBNAME,
+                // dbName:DBNAME,
                 colName,
                 name: pageName,
                 type: pageType,
@@ -91,7 +95,7 @@ index.get('/', async ctx => {
         })
     } else if(type === 'search') {
         await DB.pageSearch({
-            dbName:DBNAME,
+            // dbName:DBNAME,
             colName,
             id
         }).then( result => {

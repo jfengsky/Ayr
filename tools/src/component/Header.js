@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 
 class Header extends Component {
     render() {
+        let {nav, type} = this.props
+        nav = this.resetSelect(nav, type)
         return (
             <nav className="navbar navbar-default">
                 <div className="container">
@@ -16,7 +18,7 @@ class Header extends Component {
                     <div className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
                             {
-                                this.props.nav.map((item,index) => {
+                                nav.map((item,index) => {
                                     let {name, tag, select} = item
                                     return (
                                         <li className={ select ? "active": '' } key={index}>
@@ -29,18 +31,34 @@ class Header extends Component {
                     </div>
                 </div>
             </nav>
-        );
+        )
+    }
+
+    resetSelect = (nav, type) => {
+        if(!type){
+            return nav
+        }
+        nav.map( item => {
+            item.select = false
+            if(type && item.tag === type){
+                item.select = true
+            }
+        })
+        return nav
     }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (store, ownProps) => {
+    
     return {
-        nav: store.nav
+        ...ownProps,
+        nav: store.pageTypeReducer.nav
     }
 }
 
 Header.propTypes = {
-    nav: PropTypes.array.isRequired
+    nav: PropTypes.array.isRequired,
+    type: PropTypes.string
 }
 
 Header = connect(mapStateToProps)(Header)

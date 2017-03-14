@@ -1,7 +1,7 @@
 import mongodb from 'mongodb'
 
 const MongoClient = mongodb.MongoClient
-const URL = 'mongodb://localhost:27017/'
+const URL = 'mongodb://localhost:27017/AyrData'
 
 const ErrorMessage = {
     open: '打开数据失败',
@@ -14,9 +14,9 @@ const DB = {
      * 保存页面信息
      * @param {String} param0 
      */
-    save({value, dbName, colName}){
+    save({name, colName}){
         return new Promise( (resolve,reject) => {
-            MongoClient.connect(URL + dbName, (err, db) => {
+            MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
                 let id = 0
                 // 实现自增id，查询最后一个，然后把id+1
@@ -26,7 +26,7 @@ const DB = {
                         id = result[result.length -1].id + 1
                     }
 
-                    collection.insert({name:value,id:id}, (inerr, docs) => {
+                    collection.insert({name,id}, (inerr, docs) => {
                         resolve(docs)
                         db.close()
                     })
@@ -40,9 +40,9 @@ const DB = {
      * 搜索页面类型
      * @param {String} param0 
      */
-    search({dbName, colName}){
+    search({colName}){
         return new Promise( (resolve,reject) => {
-            MongoClient.connect(URL + dbName, (err, db) => {
+            MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
                 collection.find({}).toArray( (searchErr, result) => {
                     if(searchErr){
@@ -60,9 +60,9 @@ const DB = {
      * 删除页面类型
      * @param {Number} param0 
      */
-    delete({id, dbName, colName}){
+    delete({id, colName}){
         return new Promise( (resolve,reject) => {
-            MongoClient.connect(URL + dbName, (err, db) => {
+            MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
                 collection.remove({id}, (delErr, result) => {
                     if(delErr){
@@ -76,9 +76,9 @@ const DB = {
         })
     },
 
-    pageSave({ dbName, colName, name, type, desc}){
+    pageSave({ colName, name, type, desc}){
         return new Promise( (resolve,reject) => {
-            MongoClient.connect(URL + dbName, (err, db) => {
+            MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
                 let id = 0
                 // 实现自增id，查询最后一个，然后把id+1
@@ -98,9 +98,9 @@ const DB = {
         })
     },
 
-    pageSearch({ dbName, colName, id }){
+    pageSearch({colName, id }){
         return new Promise( (resolve,reject) => {
-            MongoClient.connect(URL + dbName, (err, db) => {
+            MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
                 let where = {}
                 if(id >= 0){
