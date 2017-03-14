@@ -1,11 +1,15 @@
 import React from 'react';
 import Header from './Header'
-import PageType from './PageType'
+import PageTypeContent from './PageTypeContent'
+import ApiTypeContent from './ApiTypeContent'
+import PageContent from './PageContent'
 
 const Root = () => (
     <div>
         <Header type={'edit'} />
-        <PageType />
+        <PageTypeContent />
+        <ApiTypeContent />
+        <PageContent />
     </div>
 )
 

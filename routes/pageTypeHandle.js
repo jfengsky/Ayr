@@ -7,9 +7,9 @@ const pageTypeHandle = {
     init({data}){
         let {
             type,
-            name
+            name,
+            id
         } = data
-        
         switch (type) {
             case 'save':
                 return DB.save({
@@ -30,9 +30,16 @@ const pageTypeHandle = {
                         data: _data
                     }
                 })
-                break
             case 'delete':
-                break
+                return DB.delete({
+                    colName,
+                    id: id - 0
+                }).then( _data => {
+                    return {
+                        ok: 1,
+                        data: _data
+                    }
+                })
             default:
                 // throw Error('')
                 break

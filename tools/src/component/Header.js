@@ -56,8 +56,8 @@ const mapStateToProps = (store, ownProps) => {
 }
 
 Header.propTypes = {
-    // nav: PropTypes.array.isRequired,
-    // type: PropTypes.string
+    nav: PropTypes.array,
+    type: PropTypes.string
 }
 
 Header = connect(mapStateToProps)(Header)

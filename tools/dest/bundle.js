@@ -1,14 +1,6 @@
-webpackJsonp([0],{
+webpackJsonp([1],{
 
-/***/ 224:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(97);
-
-
-/***/ }),
-
-/***/ 60:
+/***/ 102:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20,7 +12,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -99,43 +91,7 @@ exports.default = Pagelist;
 
 /***/ }),
 
-/***/ 97:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _react = __webpack_require__(12);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(58);
-
-var _redux = __webpack_require__(33);
-
-var _reactRedux = __webpack_require__(32);
-
-var _reducer = __webpack_require__(57);
-
-var _reducer2 = _interopRequireDefault(_reducer);
-
-var _Root = __webpack_require__(99);
-
-var _Root2 = _interopRequireDefault(_Root);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var store = (0, _redux.createStore)(_reducer2.default);
-
-(0, _reactDom.render)(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(_Root2.default, null)
-), document.getElementById('root'));
-
-/***/ }),
-
-/***/ 99:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -145,7 +101,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(12);
+var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -153,7 +109,7 @@ var _Header = __webpack_require__(59);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Pagelist = __webpack_require__(60);
+var _Pagelist = __webpack_require__(102);
 
 var _Pagelist2 = _interopRequireDefault(_Pagelist);
 
@@ -170,6 +126,50 @@ var Root = function Root() {
 
 exports.default = Root;
 
+/***/ }),
+
+/***/ 229:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(97);
+
+
+/***/ }),
+
+/***/ 97:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(58);
+
+var _redux = __webpack_require__(27);
+
+var _reactRedux = __webpack_require__(26);
+
+var _reducer = __webpack_require__(57);
+
+var _reducer2 = _interopRequireDefault(_reducer);
+
+var _Root = __webpack_require__(103);
+
+var _Root2 = _interopRequireDefault(_Root);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _redux.createStore)(_reducer2.default);
+
+(0, _reactDom.render)(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(_Root2.default, null)
+), document.getElementById('root'));
+
 /***/ })
 
-},[224]);
+},[229]);

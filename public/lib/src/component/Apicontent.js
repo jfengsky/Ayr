@@ -9,7 +9,7 @@ class Apicontent extends Component {
             paddingLeft: 20
         }
         return (
-            <div id="api">
+            <div>
                 <div className="btn-group">
                     <button type="button" className="btn btn-primary btn-lg dropdown-toggle" onClick={this.createClickHandle}>
                         <span className="glyphicon glyphicon-plus" aria-hidden="true"></span> 创建

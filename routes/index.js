@@ -2,7 +2,11 @@ import Router from 'koa-router'
 import indexHtml from './rendHtml'
 import editHtml from './editHtml'
 
+// 页面类型
 import pageTypeHandle from './pageTypeHandle'
+
+// 页面代码
+import pageInfo from './pageInfo';
 
 // import DB from '../db/db'
 import DB from '../db/dbClient'
@@ -64,7 +68,7 @@ index.get('/', async ctx => {
     //     })
     // }
 
-}).post('/pageCode', async ctx => {
+}).post('/pageinfo', async ctx => {
     const colName = 'pageCode'
     let {
         pageName,
