@@ -116,6 +116,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(32);
 
+var _pageTypeReducer = __webpack_require__(229);
+
 var _fetch = __webpack_require__(228);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -152,14 +154,14 @@ var PageTypeContent = function (_Component) {
                 }).then(function (data) {
                     if (data.ok === 1) {
                         _this.props.dispatch({
-                            type: 'SAVE_PAGETYPE',
+                            type: _pageTypeReducer.SAVE_PAGETYPE,
                             data: data.data
                         });
                         _this.refs.pageType.value = '';
                     }
                 });
             }
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        }, _this.clickDeletePageHandle = function (e) {}, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(PageTypeContent, [{
@@ -172,7 +174,7 @@ var PageTypeContent = function (_Component) {
             }).then(function (data) {
                 if (data.ok === 1) {
                     _this2.props.dispatch({
-                        type: 'FETCH_PAGETYPELIST',
+                        type: _pageTypeReducer.FETCH_PAGETYPELIST,
                         data: data.data
                     });
                 }
@@ -181,6 +183,8 @@ var PageTypeContent = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
+            var pageTypeList = this.props.pageTypeList;
+
             return _react2.default.createElement(
                 'form',
                 { className: 'form-inline' },
@@ -220,16 +224,18 @@ var PageTypeContent = function (_Component) {
                             _react2.default.createElement(
                                 'select',
                                 { className: 'form-control', style: { width: 170, marginRight: 10 }, ref: 'selectPageType' },
-                                _react2.default.createElement(
-                                    'option',
-                                    null,
-                                    '1111'
-                                )
+                                pageTypeList && pageTypeList.map(function (item) {
+                                    return _react2.default.createElement(
+                                        'option',
+                                        { value: item.id, key: item.id },
+                                        item.name
+                                    );
+                                })
                             )
                         ),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-danger' },
+                            { type: 'button', className: 'btn btn-danger', onClick: this.clickDeletePageHandle },
                             '\u5220\u9664'
                         )
                     )
@@ -242,12 +248,12 @@ var PageTypeContent = function (_Component) {
 }(_react.Component);
 
 PageTypeContent.propTypes = {
-    pageType: _react.PropTypes.array.isRequired
+    // pageType: PropTypes.array.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(store) {
     return {
-        pageType: store.pageTypeReducer.pageType
+        pageTypeList: store.pageType
     };
 };
 

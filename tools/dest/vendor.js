@@ -6976,26 +6976,31 @@ var _initialState2 = _interopRequireDefault(_initialState);
 
 var _pageTypeReducer = __webpack_require__(229);
 
-var _pageTypeReducer2 = _interopRequireDefault(_pageTypeReducer);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var reducers = function reducers() {
+var reducer = function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default;
     var action = arguments[1];
 
     switch (action.type) {
-        case 'INIT':
-            return state;
+        case _pageTypeReducer.SAVE_PAGETYPE:
+            return Object.assign({}, state, {
+                pageType: (0, _pageTypeReducer.pageTypeReducer)(state.pageType, action)
+            });
+        case _pageTypeReducer.FETCH_PAGETYPELIST:
+            return Object.assign({}, state, {
+                pageType: (0, _pageTypeReducer.pageTypeReducer)(state.pageType, action)
+            });
         default:
             return state;
     }
 };
 
-var reducer = (0, _redux.combineReducers)({
-    reducers: reducers,
-    pageTypeReducer: _pageTypeReducer2.default
-});
+// const reducer = combineReducers({
+//     reducers,
+//     pageTypeReducer
+// })
+
 
 exports.default = reducer;
 
@@ -7097,7 +7102,7 @@ var Header = function (_Component) {
                         _react2.default.createElement(
                             'ul',
                             { className: 'nav navbar-nav' },
-                            nav.map(function (item, index) {
+                            nav && nav.map(function (item, index) {
                                 var name = item.name,
                                     tag = item.tag,
                                     select = item.select;
@@ -7123,15 +7128,14 @@ var Header = function (_Component) {
 }(_react.Component);
 
 var mapStateToProps = function mapStateToProps(store, ownProps) {
-
     return _extends({}, ownProps, {
-        nav: store.pageTypeReducer.nav
+        nav: store.nav
     });
 };
 
 Header.propTypes = {
-    nav: _react.PropTypes.array.isRequired,
-    type: _react.PropTypes.string
+    // nav: PropTypes.array.isRequired,
+    // type: PropTypes.string
 };
 
 Header = (0, _reactRedux.connect)(mapStateToProps)(Header);
@@ -24177,29 +24181,30 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _initialState = __webpack_require__(100);
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var _initialState2 = _interopRequireDefault(_initialState);
+/**
+ * 页面类型
+ */
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var SAVE_PAGETYPE = exports.SAVE_PAGETYPE = 'SAVE_PAGETYPE';
+var FETCH_PAGETYPELIST = exports.FETCH_PAGETYPELIST = 'FETCH_PAGETYPELIST';
 
-var pageTypeReducer = function pageTypeReducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _initialState2.default;
+var pageTypeReducer = exports.pageTypeReducer = function pageTypeReducer() {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
     switch (action.type) {
-        case 'SAVE_PAGETYPE':
-            console.log('SAVE_PAGETYPE');
+        case SAVE_PAGETYPE:
+            state = [].concat(_toConsumableArray(state), [action.data]);
             return state;
-        case 'FETCH_PAGETYPELIST':
+        case FETCH_PAGETYPELIST:
+            state = action.data;
             return state;
         default:
             return state;
     }
-}; /**
-    * 页面类型
-    */
-exports.default = pageTypeReducer;
+};
 
 /***/ })
 /******/ ]);

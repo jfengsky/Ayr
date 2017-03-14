@@ -1,18 +1,19 @@
 /**
  * 页面类型
  */
-import initialState from '../store/initialState'
 
-const pageTypeReducer = (state = initialState, action) =>  {
+export const SAVE_PAGETYPE = 'SAVE_PAGETYPE'
+export const FETCH_PAGETYPELIST = 'FETCH_PAGETYPELIST'
+
+export const pageTypeReducer = (state = [], action) =>  {
     switch(action.type) {
-        case 'SAVE_PAGETYPE':
-            console.log('SAVE_PAGETYPE')
+        case SAVE_PAGETYPE:
+            state = [...state, action.data]
             return state
-        case 'FETCH_PAGETYPELIST':
+        case FETCH_PAGETYPELIST:
+            state = action.data
             return state
         default:
             return state
     }
 }
-
-export default pageTypeReducer

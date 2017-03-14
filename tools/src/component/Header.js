@@ -18,7 +18,7 @@ class Header extends Component {
                     <div className="collapse navbar-collapse">
                         <ul className="nav navbar-nav">
                             {
-                                nav.map((item,index) => {
+                                nav && nav.map((item,index) => {
                                     let {name, tag, select} = item
                                     return (
                                         <li className={ select ? "active": '' } key={index}>
@@ -49,16 +49,15 @@ class Header extends Component {
 }
 
 const mapStateToProps = (store, ownProps) => {
-    
     return {
         ...ownProps,
-        nav: store.pageTypeReducer.nav
+        nav: store.nav
     }
 }
 
 Header.propTypes = {
-    nav: PropTypes.array.isRequired,
-    type: PropTypes.string
+    // nav: PropTypes.array.isRequired,
+    // type: PropTypes.string
 }
 
 Header = connect(mapStateToProps)(Header)

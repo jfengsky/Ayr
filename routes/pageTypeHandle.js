@@ -25,7 +25,6 @@ const pageTypeHandle = {
                 return DB.search({
                     colName
                 }).then(_data => {
-                    debugger
                     return {
                         ok: 1,
                         data: _data

@@ -1,18 +1,20 @@
 /**
  * 页面类型编辑
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { FETCH_PAGETYPE } from '../store/fetch';
+import { SAVE_PAGETYPE, FETCH_PAGETYPELIST } from '../reducers/pageTypeReducer'
+import { FETCH_PAGETYPE } from '../store/fetch'
 
 class PageTypeContent extends Component {
+    
     componentDidMount() {
         FETCH_PAGETYPE({
             type: 'search'
         }).then(data => {
             if(data.ok === 1){
                 this.props.dispatch({
-                    type: 'FETCH_PAGETYPELIST',
+                    type: FETCH_PAGETYPELIST,
                     data: data.data
                 })
             }
@@ -20,6 +22,7 @@ class PageTypeContent extends Component {
     }
     
     render() {
+        let { pageTypeList } = this.props
         return (
             <form className="form-inline">
                 <h5>页面类型配置</h5>
@@ -34,10 +37,10 @@ class PageTypeContent extends Component {
                     <div className="col-xs-12">
                         <div className="form-group">
                             <select className="form-control" style={{ width: 170, marginRight: 10 }} ref="selectPageType">
-                                <option>1111</option>
+                                { pageTypeList && pageTypeList.map(item => (<option value={item.id} key={item.id}>{item.name}</option>)) }
                             </select>
                         </div>
-                        <button type="button" className="btn btn-danger">删除</button>
+                        <button type="button" className="btn btn-danger" onClick={this.clickDeletePageHandle}>删除</button>
                     </div>
                 </div>
             </form>
@@ -53,7 +56,7 @@ class PageTypeContent extends Component {
             }).then( data => {
                 if(data.ok === 1){
                     this.props.dispatch({
-                        type: 'SAVE_PAGETYPE',
+                        type: SAVE_PAGETYPE,
                         data: data.data
                     })
                     this.refs.pageType.value = ''
@@ -62,15 +65,19 @@ class PageTypeContent extends Component {
         }
     }
 
+    clickDeletePageHandle = e => {
+        
+    }
+
 }
 
 PageTypeContent.propTypes = {
-    pageType: PropTypes.array.isRequired
+    // pageType: PropTypes.array.isRequired
 }
 
 const mapStateToProps = store => {
     return {
-        pageType: store.pageTypeReducer.pageType
+        pageTypeList: store.pageType
     }
 }
 
