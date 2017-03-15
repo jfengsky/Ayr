@@ -1,6 +1,6 @@
 webpackJsonp([1],{
 
-/***/ 102:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15,6 +15,16 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(18);
+
+var _fetch = __webpack_require__(61);
+
+var _pageTypeReducer = __webpack_require__(60);
+
+var _page = __webpack_require__(100);
+
+var _filter = __webpack_require__(233);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,46 +46,139 @@ var Pagelist = function (_Component) {
     }
 
     _createClass(Pagelist, [{
-        key: "render",
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            (0, _fetch.FETCH_PAGETYPE)({
+                type: 'search'
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this2.props.dispatch({
+                        type: _pageTypeReducer.FETCH_PAGETYPELIST,
+                        data: data.data
+                    });
+
+                    (0, _fetch.FETCH_PAGEINFO)({
+                        type: 'search'
+                    }).then(function (data) {
+                        if (data.ok) {
+                            _this2.props.dispatch((0, _page.getPageInfo)(data.data));
+                        }
+                    });
+                }
+            });
+
+            // FETCH_PAGEINFO({
+            //     type: 'search'
+            // }).then( data => {
+            //     if(data.ok){
+            //         this.props.dispatch(getPageInfo(data.data))
+            //     }
+            // })
+        }
+    }, {
+        key: 'render',
         value: function render() {
+            var _props = this.props,
+                pageList = _props.pageList,
+                pageType = _props.pageType;
+
+            var isShowList = true;
             return _react2.default.createElement(
-                "div",
-                { className: "container", id: "home" },
+                'div',
+                { className: 'container', id: 'home' },
                 _react2.default.createElement(
-                    "table",
-                    { className: "table" },
+                    'table',
+                    { className: 'table' },
                     _react2.default.createElement(
-                        "thead",
+                        'thead',
                         null,
                         _react2.default.createElement(
-                            "tr",
+                            'tr',
                             null,
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "#"
+                                '#'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "Name"
+                                'Name'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "type"
+                                'kind'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "desc"
+                                'desc'
                             ),
                             _react2.default.createElement(
-                                "th",
+                                'th',
                                 null,
-                                "edit"
+                                'edit'
                             )
                         )
+                    ),
+                    isShowList && _react2.default.createElement(
+                        'tbody',
+                        null,
+                        pageList.map(function (item, index) {
+                            var name = item.name,
+                                desc = item.desc,
+                                kind = item.kind;
+
+                            var pageUrl = '/pages/' + name + '.html';
+                            var pageTypeName = (0, _filter.getPageTypeName)(pageType, kind - 0);
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: index },
+                                _react2.default.createElement(
+                                    'th',
+                                    { scope: 'row' },
+                                    index + 1
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'a',
+                                        { href: pageUrl, target: '_blank' },
+                                        name,
+                                        '.html'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    pageTypeName
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    desc
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'btn-link' },
+                                        '\u4FEE\u6539'
+                                    ),
+                                    ' ',
+                                    _react2.default.createElement(
+                                        'span',
+                                        { className: 'btn-link' },
+                                        '\u5220\u9664'
+                                    )
+                                )
+                            );
+                        })
                     )
                 )
             );
@@ -85,13 +188,24 @@ var Pagelist = function (_Component) {
     return Pagelist;
 }(_react.Component);
 
-Pagelist.propTypes = {};
+Pagelist.propTypes = {
+    Pagelist: _react.PropTypes.array
+};
+
+var mapStateToProps = function mapStateToProps(store) {
+    return {
+        pageType: store.pageType,
+        pageList: store.pageList
+    };
+};
+
+Pagelist = (0, _reactRedux.connect)(mapStateToProps)(Pagelist);
 
 exports.default = Pagelist;
 
 /***/ }),
 
-/***/ 103:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -109,7 +223,7 @@ var _Header = __webpack_require__(59);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Pagelist = __webpack_require__(102);
+var _Pagelist = __webpack_require__(104);
 
 var _Pagelist2 = _interopRequireDefault(_Pagelist);
 
@@ -128,15 +242,43 @@ exports.default = Root;
 
 /***/ }),
 
-/***/ 229:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(97);
+module.exports = __webpack_require__(98);
 
 
 /***/ }),
 
-/***/ 97:
+/***/ 233:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * 根据类型id获取页面类型的中文名
+ * @param {Array} pageType 类型列表
+ * @param {Number} type 
+ * @return {String} 
+ */
+var getPageTypeName = exports.getPageTypeName = function getPageTypeName(pageType, type) {
+    return pageType.map(function (_ref) {
+        var name = _ref.name,
+            id = _ref.id;
+
+        if (id === type) {
+            return name;
+        }
+    });
+};
+
+/***/ }),
+
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -150,13 +292,13 @@ var _reactDom = __webpack_require__(58);
 
 var _redux = __webpack_require__(27);
 
-var _reactRedux = __webpack_require__(26);
+var _reactRedux = __webpack_require__(18);
 
 var _reducer = __webpack_require__(57);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _Root = __webpack_require__(103);
+var _Root = __webpack_require__(105);
 
 var _Root2 = _interopRequireDefault(_Root);
 
@@ -172,4 +314,4 @@ var store = (0, _redux.createStore)(_reducer2.default);
 
 /***/ })
 
-},[229]);
+},[232]);

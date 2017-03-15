@@ -76,7 +76,7 @@ const DB = {
         })
     },
 
-    pageSave({ colName, name, type, desc}){
+    pageSave({ colName, name, kind, desc}){
         return new Promise( (resolve,reject) => {
             MongoClient.connect(URL, (err, db) => {
                 const collection = db.collection(colName)
@@ -88,7 +88,7 @@ const DB = {
                         id = result[result.length -1].id + 1
                     }
 
-                    collection.insert({name,id,type,desc}, (inerr, docs) => {
+                    collection.insert({name,id,kind,desc}, (inerr, docs) => {
                         resolve(docs)
                         db.close()
                     })

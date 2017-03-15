@@ -3,12 +3,16 @@
  */
 
 export const SAVE_PAGE = 'SAVE_PAGE'
+export const FETCH_PAGE_INFO = 'FETCH_PAGE_INFO'
 
-export const pageReducer = (store = {}, action) => {
+
+export const pageReducer = (state = {}, action) => {
     switch (action.type) {
         case SAVE_PAGE:
-            return store
+            return state
+        case FETCH_PAGE_INFO:
+            return action.data
         default:
-            return store
+            return state
     }
 }

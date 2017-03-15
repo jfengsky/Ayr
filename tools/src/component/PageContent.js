@@ -25,7 +25,7 @@ class PageContent extends Component {
                         <span className="glyphicon glyphicon-file" aria-hidden="true"></span> 创建
                     </button>
                 </div>
-                <form className="form-horizontal" style={{display: showCreatePage ? '' : 'none'}} onSubmit={this.savePage}>
+                <form className="form-horizontal" style={{display: showCreatePage ? '' : 'none'}}>
                     <div className='form-group'>
                         <label htmlFor="pageName" className="col-sm-1 control-label">文件名</label>
                         <div className="col-sm-11">
@@ -46,10 +46,7 @@ class PageContent extends Component {
                     <div className='form-group'>
                         <label htmlFor="pageName" className="col-sm-1 control-label">页面描述</label>
                         <div className="col-sm-11">
-                            <div className="input-group">
-                                <input type="text" className="form-control" ref="pageDesc" placeholder="请输入页面描述" />
-                                <div className="input-group-addon">.html</div>
-                            </div>
+                            <input type="text" className="form-control" ref="pageDesc" placeholder="请输入页面描述" />
                         </div>
                     </div>
                     <div className='form-group'>
@@ -60,7 +57,7 @@ class PageContent extends Component {
                     <div className="form-group">
                         <div className="col-sm-12">
                             <div className="btn-group">
-                                <button type="submit" className="btn btn-primary btn-lg dropdown-toggle">
+                                <button type="button" className="btn btn-primary btn-lg dropdown-toggle" onClick={this.savePage}>
                                     <span className="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> 保存
                                 </button>
                             </div>
@@ -94,7 +91,7 @@ class PageContent extends Component {
         FETCH_PAGEINFO({
             type: 'save',
             name,
-            type,
+            kind: type,
             desc,
             code
         })

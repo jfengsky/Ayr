@@ -8,6 +8,11 @@ const initialState = {
      */
     pageType: [],
 
+    /**
+     * 所有保存的页面列表
+     */
+    pageList: [],
+
     // 主导航
     nav: [
         {
