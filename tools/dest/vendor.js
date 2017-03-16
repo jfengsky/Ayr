@@ -6978,6 +6978,8 @@ var _pageTypeReducer = __webpack_require__(60);
 
 var _pageReducer = __webpack_require__(107);
 
+var _api = __webpack_require__(234);
+
 var _apiReducer = __webpack_require__(106);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -7003,6 +7005,20 @@ var reducer = function reducer() {
             return Object.assign({}, state, {
                 pageList: (0, _pageReducer.pageReducer)(state.pageList, action)
             });
+        case _api.INSCRE_APITYPE:
+            return Object.assign({}, state, {
+                apiType: (0, _apiReducer.apiReducer)(state.apiType, action)
+            });
+        case _api.SEARCH_APITYPE:
+            return Object.assign({}, state, {
+                apiType: (0, _apiReducer.apiReducer)(state.apiType, action)
+            });
+        case _api.DELETE_APITYPE:
+            return Object.assign({}, state, {
+                apiType: (0, _apiReducer.apiReducer)(state.apiType, action)
+            });
+        case _api.MOIDFY_APITYPE:
+            return state;
         default:
             return state;
     }
@@ -7263,7 +7279,7 @@ var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
     添加: {
         type: 'save',
         name: '',
-        type: '',
+        kind: '',
         desc: '',
         code: ''
     }
@@ -7271,7 +7287,7 @@ var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
     修改: {
         type: 'modify',
         name: '',
-        type: '',
+        kind: '',
         desc: '',
         code: '',
         id
@@ -7289,7 +7305,36 @@ var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
  */
 var FETCH_PAGEINFO = exports.FETCH_PAGEINFO = function FETCH_PAGEINFO(data) {
     var setting = {
-        url: '/pageinfo',
+        url: '/pageType',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 页面类型操作
+ * @param {Object} data 
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        path: '',
+        desc: ''
+    }
+ */
+
+var FETCH_APITYPE = exports.FETCH_APITYPE = function FETCH_APITYPE(data) {
+    var setting = {
+        url: '/apiType',
         type: 'post',
         data: data,
         dataType: 'json'
@@ -10835,25 +10880,29 @@ var getPageInfo = exports.getPageInfo = function getPageInfo(data) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-/**
- * 接口配置
- */
+exports.apiReducer = undefined;
 
-var SAVE_APITYPE = exports.SAVE_APITYPE = 'SAVE_APITYPE';
-var FETCH_APITYPE = exports.FETCH_APITYPE = 'FETCH_APITYPE';
-var DELETE_APITYPE = exports.DELETE_APITYPE = 'DELETE_APITYPE';
+var _api = __webpack_require__(234);
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } } /**
+                                                                                                                                                                                                     * 接口配置
+                                                                                                                                                                                                     */
 
 var apiReducer = exports.apiReducer = function apiReducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var action = arguments[1];
 
     switch (action.type) {
-        case SAVE_APITYPE:
-            return state;
-        case FETCH_APITYPE:
-            return state;
-        case DELETE_APITYPE:
-            return state;
+        case _api.INSCRE_APITYPE:
+            return [].concat(_toConsumableArray(state), [action.data]);
+        case _api.SEARCH_APITYPE:
+            return [].concat(_toConsumableArray(action.data));
+        case _api.DELETE_APITYPE:
+            return state.filter(function (item) {
+                if (item.id !== action.id) {
+                    return item;
+                }
+            });
         default:
             return state;
     }
@@ -10903,6 +10952,11 @@ Object.defineProperty(exports, "__esModule", {
 
 
 var initialState = {
+
+    /**
+     * 接口类型
+     */
+    apiType: [],
 
     /**
      * 页面类型
@@ -24426,6 +24480,45 @@ module.exports = function(module) {
 	return module;
 };
 
+
+/***/ }),
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var INSCRE_APITYPE = exports.INSCRE_APITYPE = 'INSCRE_APITYPE';
+var SEARCH_APITYPE = exports.SEARCH_APITYPE = 'SEARCH_APITYPE';
+var DELETE_APITYPE = exports.DELETE_APITYPE = 'DELETE_APITYPE';
+var MOIDFY_APITYPE = exports.MOIDFY_APITYPE = 'MOIDFY_APITYPE';
+
+var addApiType = exports.addApiType = function addApiType(data) {
+    return {
+        data: data,
+        type: INSCRE_APITYPE
+    };
+};
+
+var searchApiType = exports.searchApiType = function searchApiType(data) {
+    return {
+        data: data,
+        type: SEARCH_APITYPE
+    };
+};
+
+var deleteApiType = exports.deleteApiType = function deleteApiType(data) {
+    return {
+        id: data.id,
+        type: DELETE_APITYPE
+    };
+};
 
 /***/ })
 /******/ ]);

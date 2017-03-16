@@ -18,6 +18,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(18);
 
+var _fetch = __webpack_require__(61);
+
+var _api = __webpack_require__(234);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28,18 +32,133 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 * 接口类型编辑
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 */
 
-var ApiTypeContent = function (_Component) {
-    _inherits(ApiTypeContent, _Component);
+var ApiTypeInfo = function (_Component) {
+    _inherits(ApiTypeInfo, _Component);
 
-    function ApiTypeContent() {
+    function ApiTypeInfo() {
+        _classCallCheck(this, ApiTypeInfo);
+
+        return _possibleConstructorReturn(this, (ApiTypeInfo.__proto__ || Object.getPrototypeOf(ApiTypeInfo)).apply(this, arguments));
+    }
+
+    _createClass(ApiTypeInfo, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                list = _props.list,
+                kind = _props.kind;
+
+            if (kind >= 0) {
+                kind = kind - 0;
+            } else {
+                kind = list[0].id - 0;
+            }
+
+            var apiInfo = {};
+
+            list.some(function (item) {
+                if (item.kind - 0 === kind) {
+                    apiInfo = item;
+                    return true;
+                }
+            });
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'form-group' },
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    apiInfo.path
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    apiInfo.desc
+                )
+            );
+        }
+    }]);
+
+    return ApiTypeInfo;
+}(_react.Component);
+
+ApiTypeInfo.propTypes = {};
+
+var ApiTypeContent = function (_Component2) {
+    _inherits(ApiTypeContent, _Component2);
+
+    function ApiTypeContent(props) {
         _classCallCheck(this, ApiTypeContent);
 
-        return _possibleConstructorReturn(this, (ApiTypeContent.__proto__ || Object.getPrototypeOf(ApiTypeContent)).apply(this, arguments));
+        var _this2 = _possibleConstructorReturn(this, (ApiTypeContent.__proto__ || Object.getPrototypeOf(ApiTypeContent)).call(this, props));
+
+        _this2.saveApiType = function (e) {
+            var _this2$refs = _this2.refs,
+                apiName = _this2$refs.apiName,
+                apiPath = _this2$refs.apiPath,
+                pageType = _this2$refs.pageType,
+                apiDesc = _this2$refs.apiDesc;
+
+            var name = apiName.value;
+            var path = apiPath.value;
+            var kind = pageType.value - 0;
+            var desc = apiDesc.value;
+            if (!name || !path || !desc) {
+                return false;
+            }
+
+            (0, _fetch.FETCH_APITYPE)({
+                type: 'save',
+                name: name,
+                path: path,
+                kind: kind,
+                desc: desc
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this2.props.dispatch((0, _api.addApiType)({ name: name, path: path, kind: kind, desc: desc }));
+                }
+            });
+        };
+
+        _this2.delApiType = function (e) {
+            var id = _this2.refs.selectApiName.value - 0;
+            (0, _fetch.FETCH_APITYPE)({
+                type: 'delete',
+                id: id
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this2.props.dispatch((0, _api.deleteApiType)({ id: id }));
+                }
+            });
+        };
+
+        _this2.state = {
+            currentTypeId: null
+        };
+        return _this2;
     }
 
     _createClass(ApiTypeContent, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this3 = this;
+
+            (0, _fetch.FETCH_APITYPE)({
+                type: 'search'
+            }).then(function (data) {
+                if (data.ok === 1) {
+                    _this3.props.dispatch((0, _api.searchApiType)(data.data));
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var _props2 = this.props,
+                apiType = _props2.apiType,
+                pageType = _props2.pageType;
+
             return _react2.default.createElement(
                 'form',
                 { className: 'form-inline', style: { marginTop: 50 } },
@@ -62,7 +181,40 @@ var ApiTypeContent = function (_Component) {
                             _react2.default.createElement(
                                 'select',
                                 { className: 'form-control', ref: 'pageType' },
-                                this.props.pageType.map(function (item) {
+                                pageType.map(function (item) {
+                                    return _react2.default.createElement(
+                                        'option',
+                                        { value: item.id, key: item.id },
+                                        item.name
+                                    );
+                                })
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group' },
+                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'apiDesc', placeholder: '\u8F93\u5165\u63A5\u53E3\u63CF\u8FF0', style: { width: 500, marginRight: 10 } })
+                        ),
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-primary', onClick: this.saveApiType },
+                            '\u4FDD\u5B58'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-xs-12', style: { marginTop: 40 } },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'form-group', style: { marginRight: 10 } },
+                            _react2.default.createElement(
+                                'select',
+                                { className: 'form-control', ref: 'selectApiName' },
+                                apiType.map(function (item) {
                                     return _react2.default.createElement(
                                         'option',
                                         { value: item.id, key: item.id },
@@ -71,36 +223,10 @@ var ApiTypeContent = function (_Component) {
                                 })
                             )
                         ),
+                        !!apiType.length && _react2.default.createElement(ApiTypeInfo, { list: apiType, kind: this.state.currentTypeId }),
                         _react2.default.createElement(
                             'button',
-                            { type: 'button', className: 'btn btn-primary' },
-                            '\u4FDD\u5B58'
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-xs-12' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group', style: { marginRight: 10 } },
-                            _react2.default.createElement(
-                                'select',
-                                { className: 'form-control' },
-                                _react2.default.createElement(
-                                    'option',
-                                    null,
-                                    '1111'
-                                )
-                            )
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'form-group' },
-                            '2222'
-                        ),
-                        _react2.default.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-danger' },
+                            { type: 'button', className: 'btn btn-danger', onClick: this.delApiType },
                             '\u5220\u9664'
                         )
                     )
@@ -113,11 +239,13 @@ var ApiTypeContent = function (_Component) {
 }(_react.Component);
 
 ApiTypeContent.propTypes = {
+    apiType: _react.PropTypes.array,
     pageType: _react.PropTypes.array
 };
 
 var mapStateToProps = function mapStateToProps(state) {
     return {
+        apiType: state.apiType,
         pageType: state.pageType
     };
 };

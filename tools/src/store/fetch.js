@@ -50,7 +50,7 @@ export const FETCH_PAGETYPE = data => {
     添加: {
         type: 'save',
         name: '',
-        type: '',
+        kind: '',
         desc: '',
         code: ''
     }
@@ -58,7 +58,7 @@ export const FETCH_PAGETYPE = data => {
     修改: {
         type: 'modify',
         name: '',
-        type: '',
+        kind: '',
         desc: '',
         code: '',
         id
@@ -76,7 +76,36 @@ export const FETCH_PAGETYPE = data => {
  */
 export const FETCH_PAGEINFO = data => {
     let setting = {
-        url: '/pageinfo',
+        url: '/pageType',
+        type: 'post',
+        data,
+        dataType: 'json'
+    }
+    return new Promise((resolve, reject) => {
+        $.ajax(setting).done(data => {
+            resolve(data)
+        }).fail(data => {
+            reject(data)
+        })
+    })
+}
+
+/**
+ * 页面类型操作
+ * @param {Object} data 
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        path: '',
+        desc: ''
+    }
+ */
+
+export const FETCH_APITYPE = data =>  {
+    let setting = {
+        url: '/apiType',
         type: 'post',
         data,
         dataType: 'json'

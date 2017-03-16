@@ -2,18 +2,20 @@
  * 接口配置
  */
 
-export const SAVE_APITYPE = 'SAVE_APITYPE'
-export const FETCH_APITYPE = 'FETCH_APITYPE'
-export const DELETE_APITYPE = 'DELETE_APITYPE'
+import { INSCRE_APITYPE, SEARCH_APITYPE, DELETE_APITYPE, MOIDFY_APITYPE } from '../action/api'
 
 export const apiReducer = (state=[], action) =>  {
     switch (action.type) {
-        case SAVE_APITYPE:
-            return state
-        case FETCH_APITYPE:
-            return state
+        case INSCRE_APITYPE:
+            return [...state, action.data]
+        case SEARCH_APITYPE:
+            return [...action.data]
         case DELETE_APITYPE:
-            return state
+            return state.filter(item => {
+                if(item.id !== action.id){
+                    return item
+                }
+            })
         default:
             return state
     }
