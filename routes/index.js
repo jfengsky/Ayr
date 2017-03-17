@@ -1,6 +1,7 @@
 import Router from 'koa-router'
 import indexHtml from './rendHtml'
 import editHtml from './editHtml'
+import apiHtml from './apiHtml';
 
 // 页面类型
 import pageTypeHandle from './pageTypeHandle'
@@ -23,6 +24,9 @@ index.get('/', async ctx => {
 }).get('/edit', async ctx => {
     
     await ctx.render('edit',{title: editHtml})
+}).get('/api', async ctx => {
+    
+    await ctx.render('api',{title: apiHtml})
 }).post('/pagetype', async ctx => {
     let result = await pageTypeHandle.init({
         data: ctx.request.body
