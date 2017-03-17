@@ -1,6 +1,53 @@
 webpackJsonp([0],{
 
-/***/ 101:
+/***/ 103:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Header = __webpack_require__(39);
+
+var _Header2 = _interopRequireDefault(_Header);
+
+var _PageTypeContent = __webpack_require__(106);
+
+var _PageTypeContent2 = _interopRequireDefault(_PageTypeContent);
+
+var _ApiTypeContent = __webpack_require__(104);
+
+var _ApiTypeContent2 = _interopRequireDefault(_ApiTypeContent);
+
+var _PageContent = __webpack_require__(105);
+
+var _PageContent2 = _interopRequireDefault(_PageContent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Root = function Root() {
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_Header2.default, { type: 'edit' }),
+        _react2.default.createElement(_PageTypeContent2.default, null),
+        _react2.default.createElement(_ApiTypeContent2.default, null),
+        _react2.default.createElement(_PageContent2.default, null)
+    );
+};
+
+exports.default = Root;
+
+/***/ }),
+
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12,15 +59,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(18);
+var _reactRedux = __webpack_require__(13);
 
-var _fetch = __webpack_require__(61);
+var _fetch = __webpack_require__(23);
 
-var _api = __webpack_require__(234);
+var _api = __webpack_require__(37);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -256,7 +303,7 @@ exports.default = ApiTypeContent;
 
 /***/ }),
 
-/***/ 102:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -268,15 +315,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(18);
+var _reactRedux = __webpack_require__(13);
 
-var _page = __webpack_require__(100);
+var _page = __webpack_require__(38);
 
-var _fetch = __webpack_require__(61);
+var _fetch = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -469,7 +516,7 @@ exports.default = PageContent;
 
 /***/ }),
 
-/***/ 103:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -481,15 +528,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(18);
+var _reactRedux = __webpack_require__(13);
 
-var _pageTypeReducer = __webpack_require__(60);
+var _pageTypeReducer = __webpack_require__(41);
 
-var _fetch = __webpack_require__(61);
+var _fetch = __webpack_require__(23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -648,27 +695,159 @@ exports.default = PageTypeContent;
 
 /***/ }),
 
-/***/ 231:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _react = __webpack_require__(8);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * 所有Promise集合
+ */
+
+/*
+通用接口返回:
+    成功 { ok: 1, data:...}
+    失败 { ok: 0, message: ....}
+*/
+
+/**
+ * 页面类型接口
+ * @param {Object} data 
+ *  传参说明:
+ *      添加: {
+ *               type: 'save',
+ *               name: '产品详情页'
+ *            }
+ *      查找: {
+ *              type: 'search'
+ *            }
+ *      删除: {
+ *              type: 'delete',
+ *              id: 1
+ *            }
+ * @return PromiseObject
+ * 
+ *      
+ */
+var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
+    var setting = {
+        url: '/pagetype',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 增删改查页面接口
+ * @param {Object} data 
+ * 传参说明:
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        desc: '',
+        code: ''
+    }
+
+    修改: {
+        type: 'modify',
+        name: '',
+        kind: '',
+        desc: '',
+        code: '',
+        id
+    }
+
+    删除: {
+        type: 'delete'
+        id
+    }
+
+    查找: {
+        type: 'search'
+        id
+    }
+ */
+var FETCH_PAGEINFO = exports.FETCH_PAGEINFO = function FETCH_PAGEINFO(data) {
+    var setting = {
+        url: '/pageType',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 页面类型操作
+ * @param {Object} data 
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        path: '',
+        desc: ''
+    }
+ */
+
+var FETCH_APITYPE = exports.FETCH_APITYPE = function FETCH_APITYPE(data) {
+    var setting = {
+        url: '/apiType',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/***/ }),
+
+/***/ 235:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(58);
+var _reactDom = __webpack_require__(30);
 
-var _redux = __webpack_require__(27);
+var _redux = __webpack_require__(19);
 
-var _reactRedux = __webpack_require__(18);
+var _reactRedux = __webpack_require__(13);
 
-var _reducer = __webpack_require__(57);
+var _reducer = __webpack_require__(29);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _Edit = __webpack_require__(99);
+var _Edit = __webpack_require__(103);
 
 var _Edit2 = _interopRequireDefault(_Edit);
 
@@ -684,7 +863,7 @@ var store = (0, _redux.createStore)(_reducer2.default);
 
 /***/ }),
 
-/***/ 99:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -693,42 +872,25 @@ var store = (0, _redux.createStore)(_reducer2.default);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.getPageInfo = exports.savePage = undefined;
 
-var _react = __webpack_require__(8);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _react2 = _interopRequireDefault(_react);
+var _pageReducer = __webpack_require__(40);
 
-var _Header = __webpack_require__(59);
-
-var _Header2 = _interopRequireDefault(_Header);
-
-var _PageTypeContent = __webpack_require__(103);
-
-var _PageTypeContent2 = _interopRequireDefault(_PageTypeContent);
-
-var _ApiTypeContent = __webpack_require__(101);
-
-var _ApiTypeContent2 = _interopRequireDefault(_ApiTypeContent);
-
-var _PageContent = __webpack_require__(102);
-
-var _PageContent2 = _interopRequireDefault(_PageContent);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Root = function Root() {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_Header2.default, { type: 'edit' }),
-        _react2.default.createElement(_PageTypeContent2.default, null),
-        _react2.default.createElement(_ApiTypeContent2.default, null),
-        _react2.default.createElement(_PageContent2.default, null)
-    );
+var savePage = exports.savePage = function savePage(data) {
+    return _extends({}, data, {
+        type: _pageReducer.SAVE_PAGE
+    });
 };
 
-exports.default = Root;
+var getPageInfo = exports.getPageInfo = function getPageInfo(data) {
+    return {
+        data: data,
+        type: _pageReducer.FETCH_PAGE_INFO
+    };
+};
 
 /***/ })
 
-},[231]);
+},[235]);

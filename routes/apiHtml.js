@@ -5,7 +5,7 @@ import reactServer from 'react-dom/server'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from '../tools/src/reducers/reducer'
-import Edit from '../tools/src/component/Edit'
+import Edit from '../tools/src/component/Api'
 
 // node下支持jsx
 register({presets: ['es2015', 'react', 'stage-0']})

@@ -6,7 +6,8 @@ module.exports = {
         bundle: [
             './src/app.js'
         ],
-        edit: './src/edit.js'
+        edit: './src/edit.js',
+        api: './src/api.js'
     },
     output: {
         path: './dest/',
