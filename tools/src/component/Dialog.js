@@ -1,17 +1,23 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
+import Modal from './Modal'
 
-class Dialog extends Component {
-    render() {
-        return (
-            <div>
-                
-            </div>
-        );
-    }
+let overlay = null
+
+const close = e => {
+    ReactDOM.unmountComponentAtNode(overlay)
+    overlay.remove()
+    overlay = null
 }
 
-Dialog.propTypes = {
+const dialog = data => {
+    overlay = document.createElement('div')
+    document.body.appendChild(overlay)
 
+    ReactDOM.render(
+        <Modal data={data} close={close} />,
+        overlay
+    )
 }
 
-export default Dialog
+export default dialog

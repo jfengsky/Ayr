@@ -2,16 +2,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { FETCH_APITYPE } from '../store/fetch'
 import { searchApiType, modifyApiType } from '../action/api'
-import Dialog from './Dialog';
+import dialog from './dialog';
 
 class ApiContent extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            id: null,
-            isShowDialog: false
-        }
-    }
     
     componentDidMount() {
         FETCH_APITYPE({
@@ -38,7 +31,7 @@ class ApiContent extends Component {
                         } = item
                         return (
                             <div style={{marginBottom: 30}} key={item.id}>
-                                <h4 onClick={this.addApi.bind(this, id)}>{name} <small>{path}</small></h4>
+                                <h4 onClick={this.addApi.bind(this, item)}>{name} <small>{path}</small></h4>
                                 <p>{desc}</p>
                                 <div className="form-inline">
                                     <div className="form-group">
@@ -56,16 +49,12 @@ class ApiContent extends Component {
                         )
                     })
                 }
-                <Dialog id={this.state.id} isShow={this.state.isShowDialog} />
             </form>
         )
     }
 
     addApi = e => {
-        this.setState({
-            id: e - 0,
-            isShowDialog: true
-        })
+        dialog({...e})
     }
 }
 

@@ -83,6 +83,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(7);
@@ -95,9 +97,9 @@ var _fetch = __webpack_require__(23);
 
 var _api = __webpack_require__(37);
 
-var _Dialog = __webpack_require__(238);
+var _dialog = __webpack_require__(240);
 
-var _Dialog2 = _interopRequireDefault(_Dialog);
+var _dialog2 = _interopRequireDefault(_dialog);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -110,23 +112,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var ApiContent = function (_Component) {
     _inherits(ApiContent, _Component);
 
-    function ApiContent(props) {
+    function ApiContent() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
         _classCallCheck(this, ApiContent);
 
-        var _this = _possibleConstructorReturn(this, (ApiContent.__proto__ || Object.getPrototypeOf(ApiContent)).call(this, props));
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-        _this.addApi = function (e) {
-            _this.setState({
-                id: e - 0,
-                isShowDialog: true
-            });
-        };
-
-        _this.state = {
-            id: null,
-            isShowDialog: false
-        };
-        return _this;
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ApiContent.__proto__ || Object.getPrototypeOf(ApiContent)).call.apply(_ref, [this].concat(args))), _this), _this.addApi = function (e) {
+            (0, _dialog2.default)(_extends({}, e));
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(ApiContent, [{
@@ -164,7 +163,7 @@ var ApiContent = function (_Component) {
                         { style: { marginBottom: 30 }, key: item.id },
                         _react2.default.createElement(
                             'h4',
-                            { onClick: _this3.addApi.bind(_this3, id) },
+                            { onClick: _this3.addApi.bind(_this3, item) },
                             name,
                             ' ',
                             _react2.default.createElement(
@@ -221,8 +220,7 @@ var ApiContent = function (_Component) {
                             )
                         )
                     );
-                }),
-                _react2.default.createElement(_Dialog2.default, { id: this.state.id, isShow: this.state.isShowDialog })
+                })
             );
         }
     }]);
@@ -246,7 +244,7 @@ exports.default = ApiContent;
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -262,6 +260,8 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _fetch = __webpack_require__(23);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -270,28 +270,174 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Dialog = function (_Component) {
-    _inherits(Dialog, _Component);
+var Modal = function (_Component) {
+    _inherits(Modal, _Component);
 
-    function Dialog() {
-        _classCallCheck(this, Dialog);
+    function Modal() {
+        var _ref;
 
-        return _possibleConstructorReturn(this, (Dialog.__proto__ || Object.getPrototypeOf(Dialog)).apply(this, arguments));
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Modal);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Modal.__proto__ || Object.getPrototypeOf(Modal)).call.apply(_ref, [this].concat(args))), _this), _this.saveClickHandle = function (e) {
+            var name = _this.refs.infoInput.value.trim();
+            var text = _this.refs.textInput.value.trim();
+
+            if (!name || !text) {
+                return false;
+            }
+
+            (0, _fetch.FETCH_APIINFO)({
+                type: 'save',
+                name: name,
+                text: text
+            }).then(function (data) {
+                debugger;
+            });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
     }
 
-    _createClass(Dialog, [{
+    _createClass(Modal, [{
         key: 'render',
         value: function render() {
-            return _react2.default.createElement('div', null);
+            var _props$data = this.props.data,
+                id = _props$data.id,
+                name = _props$data.name,
+                path = _props$data.path;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'modal', style: { display: 'block' } },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'modal-dialog modal-lg' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'modal-content' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-header' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'close', onClick: this.props.close },
+                                _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    '\xD7'
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'h4',
+                                { className: 'modal-title' },
+                                name,
+                                ' ',
+                                _react2.default.createElement(
+                                    'small',
+                                    null,
+                                    path
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-body' },
+                            _react2.default.createElement(
+                                'form',
+                                null,
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { htmlFor: 'recipient-name', className: 'control-label' },
+                                        '\u63A5\u53E3\u63CF\u8FF0:'
+                                    ),
+                                    _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'infoInput' })
+                                ),
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'form-group' },
+                                    _react2.default.createElement(
+                                        'label',
+                                        { htmlFor: 'message-text', className: 'control-label' },
+                                        '\u5185\u5BB9:'
+                                    ),
+                                    _react2.default.createElement('textarea', { className: 'form-control', ref: 'textInput' })
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'modal-footer' },
+                            _react2.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: this.saveClickHandle },
+                                '\u4FDD\u5B58'
+                            )
+                        )
+                    )
+                )
+            );
         }
     }]);
 
-    return Dialog;
+    return Modal;
 }(_react.Component);
 
-Dialog.propTypes = {};
+Modal.propTypes = {
+    // close
+    // data
+};
 
-exports.default = Dialog;
+exports.default = Modal;
+
+/***/ }),
+
+/***/ 240:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(30);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _Modal = __webpack_require__(239);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var overlay = null;
+
+var close = function close(e) {
+    _reactDom2.default.unmountComponentAtNode(overlay);
+    overlay.remove();
+    overlay = null;
+};
+
+var dialog = function dialog(data) {
+    overlay = document.createElement('div');
+    document.body.appendChild(overlay);
+
+    _reactDom2.default.render(_react2.default.createElement(_Modal2.default, { data: data, close: close }), overlay);
+};
+
+exports.default = dialog;
 
 /***/ })
 

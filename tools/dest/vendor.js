@@ -3140,6 +3140,47 @@ var FETCH_APITYPE = exports.FETCH_APITYPE = function FETCH_APITYPE(data) {
     });
 };
 
+/**
+ * 接口信息操作接口
+ * @param {Object} data
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        text: ''
+    }
+    修改: {
+        type: 'modify',
+        id: '',
+        name: '',
+        text: '',
+    }
+    查询: {
+        type: 'search'
+        id: '' // 无id标示查询所有
+    }
+    删除: {
+        type: 'delete',
+        id: ''
+    }
+ */
+
+var FETCH_APIINFO = exports.FETCH_APIINFO = function FETCH_APIINFO(data) {
+    var setting = {
+        url: '/apiInfo',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
 /***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {

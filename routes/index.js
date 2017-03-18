@@ -12,6 +12,9 @@ import pageInfo from './pageInfo';
 // 接口类型
 import apiTypeHandle from './apiTypeHandle'
 
+// 接口信息
+import apiInfoHandle from './apiInfoHandle'
+
 // import DB from '../db/db'
 import DB from '../db/dbClient'
 import file from '../bin/file'
@@ -41,6 +44,12 @@ index.get('/', async ctx => {
     
 }).post('/apiType', async ctx => {
     let result = await apiTypeHandle.init({
+        data: ctx.request.body
+    })
+    ctx.body = result
+    
+}).post('/apiInfo', async ctx => {
+    let result = await apiInfoHandle.init({
         data: ctx.request.body
     })
     ctx.body = result

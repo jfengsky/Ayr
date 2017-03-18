@@ -118,3 +118,44 @@ export const FETCH_APITYPE = data =>  {
         })
     })
 }
+
+/**
+ * 接口信息操作接口
+ * @param {Object} data
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        text: ''
+    }
+    修改: {
+        type: 'modify',
+        id: '',
+        name: '',
+        text: '',
+    }
+    查询: {
+        type: 'search'
+        id: '' // 无id标示查询所有
+    }
+    删除: {
+        type: 'delete',
+        id: ''
+    }
+ */
+
+export const FETCH_APIINFO = data => {
+    let setting = {
+        url: '/apiInfo',
+        type: 'post',
+        data,
+        dataType: 'json'
+    }
+    return new Promise((resolve, reject) => {
+        $.ajax(setting).done(data => {
+            resolve(data)
+        }).fail(data => {
+            reject(data)
+        })
+    })
+}
