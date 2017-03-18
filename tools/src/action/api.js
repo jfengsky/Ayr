@@ -17,3 +17,8 @@ export const deleteApiType = data =>  ({
     id: data.id,
     type: DELETE_APITYPE
 })
+
+export const modifyApiType = data => ({
+    data,
+    type: MOIDFY_APITYPE
+})

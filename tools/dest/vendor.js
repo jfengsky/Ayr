@@ -3010,7 +3010,137 @@ module.exports = React;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */,
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * 所有Promise集合
+ */
+
+/*
+通用接口返回:
+    成功 { ok: 1, data:...}
+    失败 { ok: 0, message: ....}
+*/
+
+/**
+ * 页面类型接口
+ * @param {Object} data 
+ *  传参说明:
+ *      添加: {
+ *               type: 'save',
+ *               name: '产品详情页'
+ *            }
+ *      查找: {
+ *              type: 'search'
+ *            }
+ *      删除: {
+ *              type: 'delete',
+ *              id: 1
+ *            }
+ * @return PromiseObject
+ * 
+ *      
+ */
+var FETCH_PAGETYPE = exports.FETCH_PAGETYPE = function FETCH_PAGETYPE(data) {
+    var setting = {
+        url: '/pagetype',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 增删改查页面接口
+ * @param {Object} data 
+ * 传参说明:
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        desc: '',
+        code: ''
+    }
+
+    修改: {
+        type: 'modify',
+        name: '',
+        kind: '',
+        desc: '',
+        code: '',
+        id
+    }
+
+    删除: {
+        type: 'delete'
+        id
+    }
+
+    查找: {
+        type: 'search'
+        id
+    }
+ */
+var FETCH_PAGEINFO = exports.FETCH_PAGEINFO = function FETCH_PAGEINFO(data) {
+    var setting = {
+        url: '/pageType',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/**
+ * 页面类型操作
+ * @param {Object} data 
+ * 传参说明
+    添加: {
+        type: 'save',
+        name: '',
+        kind: '',
+        path: '',
+        desc: ''
+    }
+ */
+
+var FETCH_APITYPE = exports.FETCH_APITYPE = function FETCH_APITYPE(data) {
+    var setting = {
+        url: '/apiType',
+        type: 'post',
+        data: data,
+        dataType: 'json'
+    };
+    return new Promise(function (resolve, reject) {
+        $.ajax(setting).done(function (data) {
+            resolve(data);
+        }).fail(function (data) {
+            reject(data);
+        });
+    });
+};
+
+/***/ }),
 /* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4828,6 +4958,13 @@ var deleteApiType = exports.deleteApiType = function deleteApiType(data) {
     return {
         id: data.id,
         type: DELETE_APITYPE
+    };
+};
+
+var modifyApiType = exports.modifyApiType = function modifyApiType(data) {
+    return {
+        data: data,
+        type: MOIDFY_APITYPE
     };
 };
 
@@ -10836,6 +10973,11 @@ var initialState = {
      * 接口类型
      */
     apiType: [],
+
+    /**
+     * 接口列表
+     */
+    apiList: [],
 
     /**
      * 页面类型

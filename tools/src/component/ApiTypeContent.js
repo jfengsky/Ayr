@@ -111,6 +111,9 @@ class ApiTypeContent extends Component {
         }).then(data => {
             if(data.ok === 1) {
                 this.props.dispatch(addApiType({name,path,kind,desc}))
+                apiName.value = ''
+                apiPath.value = ''
+                apiDesc.value = ''
             }
         })
     }
