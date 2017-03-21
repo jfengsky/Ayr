@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -18,7 +18,7 @@ var _Header = __webpack_require__(39);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _ApiContent = __webpack_require__(237);
+var _ApiContent = __webpack_require__(104);
 
 var _ApiContent2 = _interopRequireDefault(_ApiContent);
 
@@ -37,43 +37,7 @@ exports.default = Root;
 
 /***/ }),
 
-/***/ 234:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _react = __webpack_require__(7);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(30);
-
-var _redux = __webpack_require__(19);
-
-var _reactRedux = __webpack_require__(13);
-
-var _reducer = __webpack_require__(29);
-
-var _reducer2 = _interopRequireDefault(_reducer);
-
-var _Api = __webpack_require__(102);
-
-var _Api2 = _interopRequireDefault(_Api);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var store = (0, _redux.createStore)(_reducer2.default);
-
-(0, _reactDom.render)(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(_Api2.default, null)
-), document.getElementById('root'));
-
-/***/ }),
-
-/***/ 237:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87,17 +51,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(13);
+var _reactRedux = __webpack_require__(11);
 
-var _fetch = __webpack_require__(23);
+var _fetch = __webpack_require__(20);
 
-var _api = __webpack_require__(37);
+var _api = __webpack_require__(31);
 
-var _dialog = __webpack_require__(240);
+var _dialog = __webpack_require__(111);
 
 var _dialog2 = _interopRequireDefault(_dialog);
 
@@ -244,7 +208,7 @@ exports.default = ApiContent;
 
 /***/ }),
 
-/***/ 239:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -256,11 +220,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _fetch = __webpack_require__(23);
+var _fetch = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -295,7 +259,8 @@ var Modal = function (_Component) {
             (0, _fetch.FETCH_APIINFO)({
                 type: 'save',
                 name: name,
-                text: text
+                text: text,
+                depend: _this.props.data.id
             }).then(function (data) {
                 debugger;
             });
@@ -398,7 +363,7 @@ exports.default = Modal;
 
 /***/ }),
 
-/***/ 240:
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -408,15 +373,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(30);
+var _reactDom = __webpack_require__(24);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Modal = __webpack_require__(239);
+var _Modal = __webpack_require__(106);
 
 var _Modal2 = _interopRequireDefault(_Modal);
 
@@ -439,6 +404,42 @@ var dialog = function dialog(data) {
 
 exports.default = dialog;
 
+/***/ }),
+
+/***/ 237:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(24);
+
+var _redux = __webpack_require__(19);
+
+var _reactRedux = __webpack_require__(11);
+
+var _reducer = __webpack_require__(30);
+
+var _reducer2 = _interopRequireDefault(_reducer);
+
+var _Api = __webpack_require__(102);
+
+var _Api2 = _interopRequireDefault(_Api);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _redux.createStore)(_reducer2.default);
+
+(0, _reactDom.render)(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: store },
+    _react2.default.createElement(_Api2.default, null)
+), document.getElementById('root'));
+
 /***/ })
 
-},[234]);
+},[237]);

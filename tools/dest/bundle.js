@@ -6,21 +6,21 @@ webpackJsonp([1],{
 "use strict";
 
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(30);
+var _reactDom = __webpack_require__(24);
 
 var _redux = __webpack_require__(19);
 
-var _reactRedux = __webpack_require__(13);
+var _reactRedux = __webpack_require__(11);
 
-var _reducer = __webpack_require__(29);
+var _reducer = __webpack_require__(30);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _Root = __webpack_require__(108);
+var _Root = __webpack_require__(110);
 
 var _Root2 = _interopRequireDefault(_Root);
 
@@ -36,7 +36,7 @@ var store = (0, _redux.createStore)(_reducer2.default);
 
 /***/ }),
 
-/***/ 107:
+/***/ 109:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48,19 +48,19 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRedux = __webpack_require__(13);
+var _reactRedux = __webpack_require__(11);
 
-var _fetch = __webpack_require__(23);
+var _fetch = __webpack_require__(20);
 
 var _pageTypeReducer = __webpack_require__(41);
 
 var _page = __webpack_require__(38);
 
-var _filter = __webpack_require__(111);
+var _filter = __webpack_require__(114);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -241,7 +241,7 @@ exports.default = Pagelist;
 
 /***/ }),
 
-/***/ 108:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -251,7 +251,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(7);
+var _react = __webpack_require__(6);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -259,7 +259,7 @@ var _Header = __webpack_require__(39);
 
 var _Header2 = _interopRequireDefault(_Header);
 
-var _Pagelist = __webpack_require__(107);
+var _Pagelist = __webpack_require__(109);
 
 var _Pagelist2 = _interopRequireDefault(_Pagelist);
 
@@ -278,7 +278,7 @@ exports.default = Root;
 
 /***/ }),
 
-/***/ 111:
+/***/ 114:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -306,7 +306,7 @@ var getPageTypeName = exports.getPageTypeName = function getPageTypeName(pageTyp
 
 /***/ }),
 
-/***/ 236:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(101);
@@ -344,4 +344,4 @@ var getPageInfo = exports.getPageInfo = function getPageInfo(data) {
 
 /***/ })
 
-},[236]);
+},[239]);

@@ -84,6 +84,27 @@ const DB = {
                 })
             })
         })
+    },
+
+    apiInfoSave({fileName, name, depend}){
+        return new Promise((resolve, reject) => {
+            MongoClient.connect(URL, (err, db) => {
+                const collection = db.collection(infoColName)
+                let id = 0
+                // 实现自增id，查询最后一个，然后把id+1
+                collection.find({}).toArray((searchErr, result) => {
+                    // console.log(result)
+                    if (result.length) {
+                        id = result[result.length - 1].id + 1
+                    }
+                    collection.insert({ fileName, id, name , depend}, (inerr, docs) => {
+                        resolve(docs)
+                        db.close()
+                    })
+
+                })
+            })
+        })
     }
 }
 

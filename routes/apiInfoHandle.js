@@ -3,18 +3,30 @@ import apiFile from '../bin/apiFile'
 
 const colName = 'apiInfo'
 
-const apiTypeHandle = {
+const apiInfoHandle = {
     init(data){
         let {
             type,
             name,
             text,
+            depend,
             id
         } = data.data
         switch (type) {
             case 'save':
                 return apiFile.write({
                     text
+                }).then(data => {
+                    return DB.apiInfoSave({
+                        fileName: data.fileName,
+                        name,
+                        depend
+                    }).then( result => {
+                        return {
+                            ok: 1,
+                            data: result.ops[0]
+                        }
+                    })
                 })
         
             default:
@@ -23,4 +35,4 @@ const apiTypeHandle = {
     }
 }
 
-export default apiTypeHandle
+export default apiInfoHandle

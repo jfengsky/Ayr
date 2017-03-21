@@ -53,7 +53,8 @@ class Modal extends Component {
         FETCH_APIINFO({
             type: 'save',
             name,
-            text
+            text,
+            depend: this.props.data.id
         }).then( data => {
             debugger
         })

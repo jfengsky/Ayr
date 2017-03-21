@@ -126,6 +126,7 @@ export const FETCH_APITYPE = data =>  {
     添加: {
         type: 'save',
         name: '',
+        depend: '', 属于apiType的哪条数据
         text: ''
     }
     修改: {
